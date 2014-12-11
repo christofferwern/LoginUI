@@ -1,17 +1,35 @@
 package com.example.loginui;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
 
 public class MainActivity extends ActionBarActivity {
-
+	
+	UserList userList = null;
+	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        
         setContentView(R.layout.activity_main);
+        
+        userList = new UserList();
+        
+        User nr1 = new User("tobbe", "pass", "email");
+        User nr2 = new User("wern", "pass", "email");
+        
+        userList.addToList(nr1);
+        userList.addToList(nr2);
+        
+        //Log.w("main", ""+userList.getUserList());
+        
     }
 
 
