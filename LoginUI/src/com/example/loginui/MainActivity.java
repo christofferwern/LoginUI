@@ -29,9 +29,8 @@ public class MainActivity extends ActionBarActivity {
         userList.addToList(nr2);
         
         //Log.w("main", ""+userList.getUserList());
-        
+        setContentView(R.layout.activity_main);        
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
