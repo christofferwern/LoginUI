@@ -11,14 +11,13 @@ import android.view.MenuItem;
 
 
 public class MainActivity extends ActionBarActivity {
-	
 	UserList userList = null;
-	
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main); 
         
         userList = new UserList();
         
@@ -29,7 +28,7 @@ public class MainActivity extends ActionBarActivity {
         userList.addToList(nr2);
         
         Log.w("main", ""+userList.getUserList());
-        setContentView(R.layout.activity_main);        
+        setContentView(R.layout.activity_main);
     }
 
     @Override
