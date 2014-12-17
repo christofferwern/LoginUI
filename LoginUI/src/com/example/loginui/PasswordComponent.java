@@ -1,13 +1,12 @@
 package com.example.loginui;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -20,7 +19,7 @@ public class PasswordComponent extends LinearLayout{
 	private int editTextWeight, labelWeight;
 	
 	private String word, tag="DEBUG", msg="msg";
-	private String[] passwordSecurityLabels = new String[]{"","Very weak","Weak","Fair","Good","Very good", "Excellent"};
+	private String[] passwordSecurityLabels = new String[]{"","Bad","Weak","Fair","Good","Very good", "Excellent"};
 	
 	private LinearLayout horizontalLinearLayout, securityHorizontalLinearLayout;
 	
@@ -36,15 +35,15 @@ public class PasswordComponent extends LinearLayout{
 		onCreate(context);
 	}
 
-	private void onCreate(Context context) {
+	@SuppressLint("NewApi") private void onCreate(Context context) {
 		
 		editTextWeight = 3;
 		labelWeight = 1;
+		
 		horizontalLinearLayout = new LinearLayout(context);
 		securityHorizontalLinearLayout = new LinearLayout(context);
 		
 		this.setOrientation(VERTICAL);
-		this.setBackgroundColor(Color.WHITE);
 		
 		horizontalLinearLayout.setOrientation(HORIZONTAL);
 		horizontalLinearLayout.setWeightSum(editTextWeight + labelWeight);
@@ -52,7 +51,7 @@ public class PasswordComponent extends LinearLayout{
 		securityHorizontalLinearLayout.setWeightSum(6);
 		
 		securityView = new TextView(context);
-		securityView.setBackgroundColor(Color.WHITE);
+		securityView.setScaleY(0.5f);
 		securityHorizontalLinearLayout.addView(securityView);
 	
 		label = new TextView(context);
@@ -65,9 +64,8 @@ public class PasswordComponent extends LinearLayout{
 			@Override
 			public void onTextChanged(CharSequence s, int start, int before, int count) {
 				word = s.toString();
-				label.setTextColor(getLabelColor());
-				label.setText(getSecurityLabel());
-				securityView.setBackgroundColor(getLabelColor());
+				securityView.setText(getSecurityLabel());
+				securityView.setBackgroundColor(getSecurityColor());
 				LinearLayout.LayoutParams securityParam = new LinearLayout.LayoutParams(0,LinearLayout.LayoutParams.MATCH_PARENT, getSecurity());
 				
 				securityHorizontalLinearLayout.removeAllViews();
@@ -96,7 +94,7 @@ public class PasswordComponent extends LinearLayout{
 		this.labelWeight = labelWeight;
 	}
 	
-	public int getLabelColor() {
+	public int getSecurityColor() {
 		int s = getSecurity();
 		if(s==1)
 			return Color.rgb(255,0,0);;
