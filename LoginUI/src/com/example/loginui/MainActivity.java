@@ -28,7 +28,7 @@ public class MainActivity extends ActionBarActivity {
         userList.addToList(nr1);
         userList.addToList(nr2);
         
-        //Log.w("main", ""+userList.getUserList());
+        Log.w("main", ""+userList.getUserList());
         setContentView(R.layout.activity_main);        
     }
 
