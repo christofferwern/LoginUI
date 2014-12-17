@@ -1,4 +1,3 @@
 INDEX VERSION 1.126+D:\Skolan\TDDC73 - Interaktionsprogrammering\project\LoginUI\.metadata\.plugins\org.eclipse.jdt.core
 1284074322.index
 3051683590.index
-4196089529.index

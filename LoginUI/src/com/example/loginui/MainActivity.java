@@ -1,5 +1,8 @@
 package com.example.loginui;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -8,8 +11,8 @@ import android.view.MenuItem;
 
 
 public class MainActivity extends ActionBarActivity {
-	
 	PasswordComponent passwordComponent;
+	UserList userList = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,6 +21,14 @@ public class MainActivity extends ActionBarActivity {
         passwordComponent = (PasswordComponent) findViewById(R.id.password_component);
         
         setContentView(R.layout.activity_main); 
+        
+        userList = new UserList();
+        
+        User nr1 = new User("tobbe", "pass", "email");
+        User nr2 = new User("wern", "pass", "email");
+        
+        userList.addToList(nr1);
+        userList.addToList(nr2);
     }
 
     @Override
