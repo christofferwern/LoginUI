@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -15,10 +16,13 @@ import android.widget.TextView;
 public class PasswordComponent extends LinearLayout{
 	
 	private EditText editText;
-	private TextView label;
+	private TextView label, securityView;
+	private int editTextWeight, labelWeight;
 	
-	private String word;
+	private String word, tag="DEBUG", msg="msg";
 	private String[] passwordSecurityLabels = new String[]{"","Very weak","Weak","Fair","Good","Very good", "Excellent"};
+	
+	private LinearLayout horizontalLinearLayout, securityHorizontalLinearLayout;
 	
 	public PasswordComponent(Context context) {
 		super(context);
@@ -34,21 +38,40 @@ public class PasswordComponent extends LinearLayout{
 
 	private void onCreate(Context context) {
 		
-		setBackgroundColor(Color.WHITE);
+		editTextWeight = 3;
+		labelWeight = 1;
+		horizontalLinearLayout = new LinearLayout(context);
+		securityHorizontalLinearLayout = new LinearLayout(context);
 		
+		this.setOrientation(VERTICAL);
+		this.setBackgroundColor(Color.WHITE);
+		
+		horizontalLinearLayout.setOrientation(HORIZONTAL);
+		horizontalLinearLayout.setWeightSum(editTextWeight + labelWeight);
+		securityHorizontalLinearLayout.setOrientation(HORIZONTAL);
+		securityHorizontalLinearLayout.setWeightSum(6);
+		
+		securityView = new TextView(context);
+		securityView.setBackgroundColor(Color.WHITE);
+		securityHorizontalLinearLayout.addView(securityView);
+	
 		label = new TextView(context);
 		label.setText("");
 		
 		editText = new EditText(context);
-		//editText.setWidth((int) (getLayoutParams().width * 0.7));
+		editText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
 		editText.setHint("Password");
-		editText.addTextChangedListener(new TextWatcher() {
-			
+		editText.addTextChangedListener(new TextWatcher() {	
 			@Override
 			public void onTextChanged(CharSequence s, int start, int before, int count) {
 				word = s.toString();
 				label.setTextColor(getLabelColor());
 				label.setText(getSecurityLabel());
+				securityView.setBackgroundColor(getLabelColor());
+				LinearLayout.LayoutParams securityParam = new LinearLayout.LayoutParams(0,LinearLayout.LayoutParams.MATCH_PARENT, getSecurity());
+				
+				securityHorizontalLinearLayout.removeAllViews();
+				securityHorizontalLinearLayout.addView(securityView, securityParam);
 			}
 			
 			@Override
@@ -58,14 +81,19 @@ public class PasswordComponent extends LinearLayout{
 			public void afterTextChanged(Editable s) {}
 		});
 		
-		addView(editText);
-		addView(label);
+		LinearLayout.LayoutParams editTextParam = new LinearLayout.LayoutParams(0,LinearLayout.LayoutParams.MATCH_PARENT, editTextWeight);
+		LinearLayout.LayoutParams labelParam = new LinearLayout.LayoutParams(0,LinearLayout.LayoutParams.MATCH_PARENT, labelWeight);
+
+		horizontalLinearLayout.addView(editText, editTextParam);
+		horizontalLinearLayout.addView(label, labelParam);
 		
-		Log.w("DEBUG", "Width: " + getWidth() );
-		Log.w("DEBUG", "Height: " + getHeight() );	
-		
-		word = "hehehB12";
-		Log.w("DEBUG", "Security: " + getSecurity() );
+		this.addView(horizontalLinearLayout);
+		this.addView(securityHorizontalLinearLayout);
+	}
+	
+	public void setWeight(int editTextWeight, int labelWeight){
+		this.editTextWeight = editTextWeight;
+		this.labelWeight = labelWeight;
 	}
 	
 	public int getLabelColor() {

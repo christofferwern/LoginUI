@@ -8,12 +8,16 @@ import android.view.MenuItem;
 
 
 public class MainActivity extends ActionBarActivity {
+	
+	PasswordComponent passwordComponent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.w("DEBUG", "Width: " + "nej" );	
-        setContentView(R.layout.activity_main);        
+        
+        passwordComponent = (PasswordComponent) findViewById(R.id.password_component);
+        
+        setContentView(R.layout.activity_main); 
     }
 
     @Override
