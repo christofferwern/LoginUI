@@ -13,17 +13,19 @@ import android.view.MenuItem;
 
 public class MainActivity extends ActionBarActivity {
 	UserList userList = null;
+	RegistrationComponent RC = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        
-        RegistrationComponent RC = (RegistrationComponent) findViewById(R.id.registration);
-        
-        //RC.setBackgroundColor(Color.YELLOW);
-        //RC.setTextColor(Color.CYAN);
-        
         setContentView(R.layout.activity_main);
+        
+        RC = (RegistrationComponent) findViewById(R.id.registration);
+        Log.w("RC", ""+RC);
+        //RC.setBackgroundColor(Color.YELLOW);
+        RC.setTextColor(Color.CYAN);
+        
+        
     }
 
     @Override
