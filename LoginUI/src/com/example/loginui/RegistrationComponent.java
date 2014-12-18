@@ -26,50 +26,48 @@ public class RegistrationComponent extends LinearLayout {
 	int themeBackgroundColor, themeTextColor;
 	int weightSum = 4, weightLeftChild = 3, weightRightChild = 1;
 	
-	ArrayList<LinearLayout> listField;
+	ArrayList<Field> listField;
 	private Context context;
 
 	public RegistrationComponent(Context context) {
 		super(context);
 		this.setOrientation(VERTICAL);
+		this.setBackgroundColor(Color.alpha(0));
 		this.themeBackgroundColor = Color.argb(100, 0, 0, 0);
 		this.themeTextColor = Color.WHITE;
-		this.listField = new ArrayList<LinearLayout>();
+		this.listField = new ArrayList<Field>();
 		
 	}
 	
 	public RegistrationComponent(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		this.setOrientation(VERTICAL);
+		this.setBackgroundColor(Color.alpha(0));
 		this.themeBackgroundColor = Color.argb(100, 0, 0, 0);
 		this.themeTextColor = Color.WHITE;
 		this.context = context;
-		this.listField = new ArrayList<LinearLayout>();
+		this.listField = new ArrayList<Field>();
 		onCreate(context);
 		
 	}
 	
 	public void setTextColor(int color){
 		for(int i= 0; i<listField.size(); i++){
-			
+			listField.get(i).setTextColor(color);
 		}
-		
-		username.setTextColor(color);
-		PC.setTextColor(color);
-		email.setTextColor(color);
-		address.setTextColor(color);
-
 	}
 	
-	@Override
-	public void setBackgroundColor(int color) {
-		
+	public void setFieldBackgroundColor(int color){
+		for(int i=0; i<listField.size(); i++){
+			listField.get(i).setBackgroundColor(color);
+		}
 	}
 	
 	public void onCreate(Context context){
-		this.setBackgroundColor(Color.alpha(0));
+		
 		
 		createFields();
+		setTextColor(themeTextColor);
 		
 		for(int i = 0; i<listField.size(); i++){
 			addView(listField.get(i));
@@ -80,12 +78,10 @@ public class RegistrationComponent extends LinearLayout {
 	public void createFields(){
 		
 		Field fieldUser = new Field(context, "Username");
-		//PC = new PasswordComponent(context);
 		Field fieldEmail = new Field(context, "Email");
 		Field fieldAddress = new Field(context, "Address");
 		
 		listField.add(fieldUser);
-		//listField.add(PC);
 		listField.add(fieldEmail);
 		listField.add(fieldAddress);
 		

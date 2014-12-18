@@ -49,12 +49,6 @@ public class Field extends LinearLayout{
 		this.setLayoutParams(layoutParams);
 	}
 	
-	@Override
-	public void setBackgroundColor(int color) {
-		backgroundColor = color;
-		this.setBackgroundColor(backgroundColor);
-	}
-	
 	public void setTextColor(int color) {
 		textColor = color;
 		editText.setTextColor(textColor);
