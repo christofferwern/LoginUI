@@ -6,6 +6,8 @@ import android.animation.ArgbEvaluator;
 import android.app.ActionBar.LayoutParams;
 import android.content.Context;
 import android.graphics.Color;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
@@ -70,15 +72,16 @@ public class RegistrationComponent extends LinearLayout {
 	}
 	
 	public void onCreate(Context context){
+	
+		addField("Username",false);
+		addField("Password",true);
+		addField("Email",true);
+		addField("Address",false);
 		
-		createFields();
 		setFieldBackgroundColor(themeBackgroundColor);
 		setTextColor(themeTextColor);
 		setHeaderColor(themeLabelColor);
 		
-		for(int i = 0; i<listField.size(); i++){
-			addView(listField.get(i));
-		}
 		btnCreate = new Button(context);
 		btnCreate.setText("Create");
 		
@@ -87,42 +90,61 @@ public class RegistrationComponent extends LinearLayout {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				for(int i = 0; i<listField.size();i++){
-					//Log.w(tag, ""+listField.get(i).getText());
-				}
 			}
 		});
+
 		
 		addView(btnCreate);
 		
 	}
-	
-	public void createFields(){
-		
-		Field fieldUser = new Field(context, "Username");
-		Field fieldPassword = new Field(context, "Password");
-		Field fieldEmail = new Field(context, "Email");
-		Field fieldAddress = new Field(context, "Address");
-		
-		listField.add(fieldUser);
-		listField.add(fieldPassword);
-		listField.add(fieldEmail);
-		listField.add(fieldAddress);
-		
+
+	public void addField(String fieldname){
+		addField(fieldname, true);
 	}
 	
-	public void addField(String fieldname){
+	public void addField(String fieldname, Boolean required){
+			
 		removeView(btnCreate);
 		
-		Field newField = new Field(context, fieldname);
+		Field newField = new Field(context, fieldname,required);
 		newField.setTextColor(themeTextColor);
 		newField.setBackgroundColor(themeBackgroundColor);
 		newField.setHeaderColor(themeLabelColor);
 		
+		newField.getEditText().addTextChangedListener(new TextWatcher() {
+			
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before, int count) {
+				// TODO Auto-generated method stub
+				btnCreate.setEnabled(true);
+				for(int i = 0; i<listField.size();i++){
+					Log.w(tag, ""+listField.get(i).isCorrectInput());
+					if(!listField.get(i).isCorrectInput()){
+						btnCreate.setEnabled(false);
+					}
+						
+				}
+			}
+			
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count,
+					int after) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void afterTextChanged(Editable s) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		
 		listField.add(newField);
 		
 		addView(newField);
-		addView(btnCreate);
+		if(btnCreate!=null)
+			addView(btnCreate);
 	}
 
 }

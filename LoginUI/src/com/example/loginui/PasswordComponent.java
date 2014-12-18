@@ -62,7 +62,6 @@ public class PasswordComponent extends LinearLayout{
 		
 		editText = new EditText(context);
 		editText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-		editText.setHint("Password");
 		editText.addTextChangedListener(new TextWatcher() {	
 			@Override
 			public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -72,13 +71,6 @@ public class PasswordComponent extends LinearLayout{
 				
 				securityHorizontalLinearLayout.removeAllViews();
 				securityHorizontalLinearLayout.addView(securityView, securityParam);
-				
-				if(getSecurity()==0)
-					label.setText("");
-				else if(getSecurity()<=3) 
-					label.setText("Not OK!");
-				else
-					label.setText("OK!");
 			}
 			
 			@Override
