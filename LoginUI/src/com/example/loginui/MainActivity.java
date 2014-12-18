@@ -21,9 +21,13 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
         
         RC = (RegistrationComponent) findViewById(R.id.registration);
-        Log.w("RC", ""+RC);
+        
         RC.setFieldBackgroundColor(Color.YELLOW);
         RC.setTextColor(Color.CYAN);
+        RC.addField("New field");
+        RC.addField("Bajs fältet");
+        
+        
     }
 
     @Override

@@ -17,14 +17,10 @@ import android.widget.TextView;
 public class RegistrationComponent extends LinearLayout {
 	
 	String tag = "Reg";
-	TextView lblUser, lblPass, lblEmail, lblAddress, checkUser, checkPass, checkEmail, checkAddress;
 	LinearLayout fieldUser, fieldEmail, fieldAddress;
 	EditText username, email, address;
 	Button btnCreate;
-	LayoutParams horizontalUser, horizontalEmail, horizontalAddress;
-	PasswordComponent PC;
 	int themeBackgroundColor, themeTextColor;
-	int weightSum = 4, weightLeftChild = 3, weightRightChild = 1;
 	
 	ArrayList<Field> listField;
 	private Context context;
@@ -52,19 +48,20 @@ public class RegistrationComponent extends LinearLayout {
 	}
 	
 	public void setTextColor(int color){
+		themeTextColor = color;
 		for(int i= 0; i<listField.size(); i++){
 			listField.get(i).setTextColor(color);
 		}
 	}
 	
 	public void setFieldBackgroundColor(int color){
+		themeBackgroundColor = color;
 		for(int i=0; i<listField.size(); i++){
 			listField.get(i).setBackgroundColor(color);
 		}
 	}
 	
 	public void onCreate(Context context){
-		
 		
 		createFields();
 		setTextColor(themeTextColor);
@@ -85,6 +82,17 @@ public class RegistrationComponent extends LinearLayout {
 		listField.add(fieldEmail);
 		listField.add(fieldAddress);
 		
+	}
+	
+	public void addField(String fieldname){
+		
+		Field newField = new Field(context, fieldname);
+		newField.setTextColor(themeTextColor);
+		newField.setBackgroundColor(themeBackgroundColor);
+		
+		listField.add(newField);
+		
+		addView(newField);
 	}
 
 }
