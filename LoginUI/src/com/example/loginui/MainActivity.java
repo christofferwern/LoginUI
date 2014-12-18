@@ -22,7 +22,8 @@ public class MainActivity extends ActionBarActivity {
         
         RC = (RegistrationComponent) findViewById(R.id.registration);
         
-        /*RC.setFieldBackgroundColor(Color.BLACK);
+        /*
+        RC.setFieldBackgroundColor(Color.BLACK);
         RC.setTextColor(Color.GREEN);
         RC.setHeaderColor(Color.WHITE);
         RC.addField("New field");

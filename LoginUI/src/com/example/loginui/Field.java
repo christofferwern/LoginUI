@@ -5,6 +5,7 @@ import java.util.regex.Pattern;
 
 import android.content.Context;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextWatcher;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -19,24 +20,37 @@ public class Field extends LinearLayout{
 	private int textColor, backgroundColor;
 	private Context context;
 	private PasswordComponent pc;
-	private boolean required, isEmail, isPassword;
+	private boolean required, isEmail, isPassword, correctInput;
+	private String labelOk, labelNotOk;
 	
 	public Field(Context context) {
 		super(context);
 		this.context = context;
 	}
+	
+	public Field(Context context, String headerLabel){
+		this(context,headerLabel,true);
+	}
 
-	public Field(Context context, String headerLabel) {
+	public Field(Context context, String headerLabel, Boolean required) {
 		super(context);
+		this.setRequired(required);
+		this.setCorrectInput(required?false:true);
 		this.context = context;
+		
+		labelOk = "OK";
+		labelNotOk = "Not OK";
 		
 		//INSTANCE EVERYTHING
 		this.headerLabel = headerLabel;
 		editText = new EditText(context);
+		editText.setInputType(InputType.TYPE_CLASS_TEXT);
 		headerTextView = new TextView(context);
-		headerTextView.setText(headerLabel);
+		headerTextView.setText(required?headerLabel + " (required)":headerLabel);
 		checkTextView = new TextView(context);
+		checkTextView.setText(required?labelNotOk:"");
 		pc = new PasswordComponent(context);
+		pc.getCheckTextView().setText(required?labelNotOk:"");
 		horizontalLayout = new LinearLayout(context);
 		
 		//GET INPUT TYPE
@@ -95,16 +109,55 @@ public class Field extends LinearLayout{
 
 			@Override
 			public void onTextChanged(CharSequence s, int start, int before, int count) {
-				if(isEmail)  {
-					if(isEmail(s.toString()))
-						checkTextView.setText("OK");
-					else
-						checkTextView.setText("Not OK");
+				
+				if(!isRequired()){
+					setCorrectInput(true);
+					return;
 				}
-				else
-					checkTextView.setText(s.toString());
+				
+				if(isEmail)  {
+					if(isEmail(s.toString())){
+						setCorrectInput(true);
+						checkTextView.setText(labelOk);
+					}
+					else{
+						setCorrectInput(false);
+						checkTextView.setText(labelNotOk);
+					}
+				}
+				else{
+					if(s.toString().equals("")){
+						setCorrectInput(false);
+						checkTextView.setText(labelNotOk);
+					}else{
+						setCorrectInput(true);
+						checkTextView.setText(labelOk);
+					}
+				}
+					
 			}
 		});	
+		
+		pc.getEditText().addTextChangedListener(new TextWatcher() {
+			
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before, int count) {
+				if(pc.getSecurity()<=3){
+					pc.getCheckTextView().setText(labelNotOk);
+					setCorrectInput(false);
+				}
+				else{
+					pc.getCheckTextView().setText(labelOk);
+					setCorrectInput(true);
+				}
+			}
+			
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count,int after) {}
+			
+			@Override
+			public void afterTextChanged(Editable s) {}
+		});
 	}
 
 	protected boolean isEmail(String s) {	 
@@ -126,6 +179,13 @@ public class Field extends LinearLayout{
 			addView(horizontalLayout);
 	}
 	
+	public String getText(){
+		if(isPassword)
+			return pc.getEditText().getText().toString();
+		else
+			return editText.getText().toString();
+	}
+	
 	public void setTextColor(int color) {
 		textColor = color;
 		editText.setTextColor(textColor);
@@ -139,6 +199,13 @@ public class Field extends LinearLayout{
 	}
 	
 	//GETTERS AND SETTERS
+	public EditText getEditText(){
+		if(isPassword)
+			return pc.getEditText();
+		else
+			return editText;
+	}
+	
 	public String getHeaderLabel() {
 		return headerLabel;
 	}
@@ -156,6 +223,24 @@ public class Field extends LinearLayout{
 	}
 	public void setCheckTextView(TextView checkTextView) {
 		this.checkTextView = checkTextView;
+	}
+
+	public boolean isRequired() {
+		return required;
+	}
+
+	public void setRequired(boolean required) {
+		this.required = required;
+		if(headerTextView!=null && headerLabel!=null)
+			headerTextView.setText(required?headerLabel + " (required)":headerLabel);
+	}
+
+	public boolean isCorrectInput() {
+		return correctInput;
+	}
+
+	public void setCorrectInput(boolean correctInput) {
+		this.correctInput = correctInput;
 	}
 
 }
