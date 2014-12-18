@@ -27,25 +27,33 @@ public class RegistrationComponent extends LinearLayout {
 	public RegistrationComponent(Context context) {
 		super(context);
 		this.setOrientation(VERTICAL);
+		this.themeBackgroundColor = Color.argb(100, 0, 0, 0);
+		this.themeTextColor = Color.WHITE;
 	}
 	
 	public RegistrationComponent(Context context, AttributeSet attrs) {
 		super(context, attrs);
-		this.setOrientation(VERTICAL);		
+		this.setOrientation(VERTICAL);
+		this.themeBackgroundColor = Color.argb(100, 0, 0, 0);
+		this.themeTextColor = Color.WHITE;
 		onCreate(context);
+	}
+	
+	public void setTextColor(int color){
+		themeTextColor = color;
 	}
 	
 	public void onCreate(Context context){
 		this.setBackgroundColor(Color.alpha(0));
-		this.themeBackgroundColor = Color.argb(100, 0, 0, 0);
-		this.themeTextColor = Color.BLACK;
+		
 		createUserField(context);
 		createEmailField(context);
 		createAddressField(context);
 		
 		PC = new PasswordComponent(context);
 		PC.setBackgroundColor(themeBackgroundColor);
-	
+		PC.setTextColor(themeTextColor);
+		
 		btnCreate = new Button(context);
 		btnCreate.setText("Create");
 		

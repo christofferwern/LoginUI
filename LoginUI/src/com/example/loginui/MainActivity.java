@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.support.v7.app.ActionBarActivity;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -17,17 +18,11 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
-        setContentView(R.layout.activity_main); 
+        RegistrationComponent RC = (RegistrationComponent) findViewById(R.id.registration);
         
-        userList = new UserList();
+        //RC.setBackgroundColor(Color.YELLOW);
+        //RC.setTextColor(Color.CYAN);
         
-        User nr1 = new User("tobbe", "pass", "email");
-        User nr2 = new User("wern", "pass", "email");
-        
-        userList.addToList(nr1);
-        userList.addToList(nr2);
-        
-        Log.w("main", ""+userList.getUserList());
         setContentView(R.layout.activity_main);
     }
 

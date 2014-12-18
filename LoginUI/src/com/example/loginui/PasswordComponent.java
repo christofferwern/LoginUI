@@ -34,7 +34,11 @@ public class PasswordComponent extends LinearLayout{
 				
 		onCreate(context);
 	}
-
+	
+	public void setTextColor(int color){
+		editText.setTextColor(color);
+	}
+	
 	@SuppressLint("NewApi") private void onCreate(Context context) {
 		
 		editTextWeight = 3;
@@ -51,7 +55,6 @@ public class PasswordComponent extends LinearLayout{
 		securityHorizontalLinearLayout.setWeightSum(6);
 		
 		securityView = new TextView(context);
-		securityView.setScaleY(0.5f);
 		securityHorizontalLinearLayout.addView(securityView);
 	
 		label = new TextView(context);
@@ -64,7 +67,6 @@ public class PasswordComponent extends LinearLayout{
 			@Override
 			public void onTextChanged(CharSequence s, int start, int before, int count) {
 				word = s.toString();
-				securityView.setText(getSecurityLabel());
 				securityView.setBackgroundColor(getSecurityColor());
 				LinearLayout.LayoutParams securityParam = new LinearLayout.LayoutParams(0,LinearLayout.LayoutParams.MATCH_PARENT, getSecurity());
 				
