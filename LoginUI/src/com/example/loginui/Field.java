@@ -21,7 +21,7 @@ public class Field extends LinearLayout{
 		super(context);
 		this.context = context;
 	}
-	
+
 	public Field(Context context, String headerLabel) {
 		super(context);
 		this.context = context;

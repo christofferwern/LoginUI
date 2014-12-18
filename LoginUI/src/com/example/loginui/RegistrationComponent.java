@@ -82,6 +82,17 @@ public class RegistrationComponent extends LinearLayout {
 		btnCreate = new Button(context);
 		btnCreate.setText("Create");
 		
+		btnCreate.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				for(int i = 0; i<listField.size();i++){
+					//Log.w(tag, ""+listField.get(i).getText());
+				}
+			}
+		});
+		
 		addView(btnCreate);
 		
 	}
