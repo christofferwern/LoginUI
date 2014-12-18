@@ -13,6 +13,7 @@ public class Field extends LinearLayout{
 	private TextView headerTextView, checkTextView;
 	private LinearLayout horizontalLayout;
 	private int textColor, backgroundColor;
+	private Context context;
 	
 	public Field(Context context) {
 		super(context);
@@ -20,6 +21,8 @@ public class Field extends LinearLayout{
 	
 	public Field(Context context, String headerLabel) {
 		super(context);
+		
+		this.context = context;
 		
 		//INSTANCE EVERYTHING
 		this.headerLabel = headerLabel;
@@ -47,6 +50,12 @@ public class Field extends LinearLayout{
 		LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
 		layoutParams.setMargins(0, 5, 0, 5);	
 		this.setLayoutParams(layoutParams);
+	}
+	
+	public void setToPasswordField(){
+		removeView(horizontalLayout);
+		horizontalLayout = new PasswordComponent(context);
+		addView(horizontalLayout);
 	}
 	
 	public void setTextColor(int color) {
