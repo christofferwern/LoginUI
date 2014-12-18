@@ -2,8 +2,6 @@ package com.example.loginui;
 
 import java.util.ArrayList;
 
-import android.animation.ArgbEvaluator;
-import android.app.ActionBar.LayoutParams;
 import android.content.Context;
 import android.graphics.Color;
 import android.text.Editable;
@@ -14,7 +12,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 public class RegistrationComponent extends LinearLayout {
 	
@@ -73,10 +70,10 @@ public class RegistrationComponent extends LinearLayout {
 	
 	public void onCreate(Context context){
 	
-		addField("Username",false);
-		addField("Password",true);
-		addField("Email",true);
-		addField("Address",false);
+		addField("Username");
+		addField("Password");
+		addField("Email");
+		addField("Address", false);
 		
 		setFieldBackgroundColor(themeBackgroundColor);
 		setTextColor(themeTextColor);
@@ -115,29 +112,20 @@ public class RegistrationComponent extends LinearLayout {
 			
 			@Override
 			public void onTextChanged(CharSequence s, int start, int before, int count) {
-				// TODO Auto-generated method stub
 				btnCreate.setEnabled(true);
 				for(int i = 0; i<listField.size();i++){
 					Log.w(tag, ""+listField.get(i).isCorrectInput());
 					if(!listField.get(i).isCorrectInput()){
 						btnCreate.setEnabled(false);
 					}
-						
 				}
 			}
 			
 			@Override
-			public void beforeTextChanged(CharSequence s, int start, int count,
-					int after) {
-				// TODO Auto-generated method stub
-				
-			}
+			public void beforeTextChanged(CharSequence s, int start, int count,int after) {}
 			
 			@Override
-			public void afterTextChanged(Editable s) {
-				// TODO Auto-generated method stub
-				
-			}
+			public void afterTextChanged(Editable s) {}
 		});
 		
 		listField.add(newField);

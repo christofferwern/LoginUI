@@ -1,5 +1,6 @@
 package com.example.loginui;
 
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -22,6 +23,8 @@ public class Field extends LinearLayout{
 	private PasswordComponent pc;
 	private boolean required, isEmail, isPassword, correctInput;
 	private String labelOk, labelNotOk;
+	private boolean isUsername;
+	private ArrayList<String> userList;
 	
 	public Field(Context context) {
 		super(context);
@@ -88,13 +91,27 @@ public class Field extends LinearLayout{
 		if( (headerLabel.toLowerCase()).equals("password")) {
 			isPassword=true;
 			isEmail=false;
+			isUsername=false;
 		}else if( (headerLabel.toLowerCase()).equals("email") || 
 				  (headerLabel.toLowerCase()).equals("e-mail") ) {
 			isPassword=false;
 			isEmail=true;
-		}else{
+			isUsername=false;
+		}else if((headerLabel.toLowerCase()).equals("username") ||
+				 (headerLabel.toLowerCase()).equals("user")){
 			isPassword=false;
 			isEmail=false;
+			isUsername=true;
+			
+			userList = new ArrayList<String>();
+			userList.add("Tobbe");
+			userList.add("Martin");
+			userList.add("Markus");
+		}
+		else{
+			isPassword=false;
+			isEmail=false;
+			isUsername=false;
 		}
 	}
 
@@ -124,6 +141,19 @@ public class Field extends LinearLayout{
 						setCorrectInput(false);
 						checkTextView.setText(labelNotOk);
 					}
+				}else if(isUsername){
+					
+					if(userList.contains(s.toString())){
+						setCorrectInput(false);
+						checkTextView.setText("Not available");
+					}else if(s.toString().equals("")){
+						setCorrectInput(false);
+						checkTextView.setText("Not OK");
+					}else{
+						setCorrectInput(true);
+						checkTextView.setText("Available!");
+					}
+					
 				}
 				else{
 					if(s.toString().equals("")){
@@ -196,6 +226,16 @@ public class Field extends LinearLayout{
 	
 	public void setHeaderColor(int color){
 		headerTextView.setTextColor(color);
+	}
+	
+	public void addUser(String s){
+		if(userList!=null)
+			userList.add(s);
+	}
+	
+	public void setUserList(ArrayList<String> list){
+		if(userList!=null)
+			userList = list;
 	}
 	
 	//GETTERS AND SETTERS
