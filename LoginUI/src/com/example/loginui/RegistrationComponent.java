@@ -26,7 +26,7 @@ public class RegistrationComponent extends LinearLayout {
 	int themeBackgroundColor, themeTextColor;
 	int weightSum = 4, weightLeftChild = 3, weightRightChild = 1;
 	
-	ArrayList<Field> listField;
+	ArrayList<LinearLayout> listField;
 	private Context context;
 
 	public RegistrationComponent(Context context) {
@@ -34,7 +34,7 @@ public class RegistrationComponent extends LinearLayout {
 		this.setOrientation(VERTICAL);
 		this.themeBackgroundColor = Color.argb(100, 0, 0, 0);
 		this.themeTextColor = Color.WHITE;
-		//this.listCustomField = new ArrayList<Field>();
+		this.listField = new ArrayList<LinearLayout>();
 		
 	}
 	
@@ -44,6 +44,7 @@ public class RegistrationComponent extends LinearLayout {
 		this.themeBackgroundColor = Color.argb(100, 0, 0, 0);
 		this.themeTextColor = Color.WHITE;
 		this.context = context;
+		this.listField = new ArrayList<LinearLayout>();
 		onCreate(context);
 		
 	}
@@ -68,29 +69,26 @@ public class RegistrationComponent extends LinearLayout {
 	public void onCreate(Context context){
 		this.setBackgroundColor(Color.alpha(0));
 		
+		createFields();
 		
-		Field fieldUser = new Field(context, "Username");
-		PC = new PasswordComponent(context);
-		lblPass = new TextView(context);
-		lblPass.setText("Password");
-		Field fieldEmail = new Field(context, "Email");
-		Field fieldAddress = new Field(context, "Address");
-		
-		createPassField(context);
-		//setTextColor(themeTextColor);
-		
-		addView(fieldUser);
-		addView(lblPass);
-		addView(PC);
-		addView(fieldEmail);
-		addView(fieldAddress);
+		for(int i = 0; i<listField.size(); i++){
+			addView(listField.get(i));
+		}
 		
 	}
 	
-	public LinearLayout createPassField(Context context){
-		PC = new PasswordComponent(context);
-		PC.setBackgroundColor(themeBackgroundColor);
+	public void createFields(){
 		
-		return PC;
+		Field fieldUser = new Field(context, "Username");
+		//PC = new PasswordComponent(context);
+		Field fieldEmail = new Field(context, "Email");
+		Field fieldAddress = new Field(context, "Address");
+		
+		listField.add(fieldUser);
+		//listField.add(PC);
+		listField.add(fieldEmail);
+		listField.add(fieldAddress);
+		
 	}
+
 }
