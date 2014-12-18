@@ -23,6 +23,7 @@ public class RegistrationComponent extends LinearLayout {
 	PasswordComponent PC;
 	int themeBackgroundColor, themeTextColor;
 	int weightSum = 4, weightLeftChild = 3, weightRightChild = 1;
+	private Context context;
 
 	public RegistrationComponent(Context context) {
 		super(context);
@@ -36,11 +37,21 @@ public class RegistrationComponent extends LinearLayout {
 		this.setOrientation(VERTICAL);
 		this.themeBackgroundColor = Color.argb(100, 0, 0, 0);
 		this.themeTextColor = Color.WHITE;
+		this.context = context;
 		onCreate(context);
 	}
 	
 	public void setTextColor(int color){
 		themeTextColor = color;
+		username.setTextColor(color);
+		email.setTextColor(color);
+		address.setTextColor(color);
+		PC.setTextColor(color);
+	}
+	
+	@Override
+	public void setBackgroundColor(int color) {
+		
 	}
 	
 	public void onCreate(Context context){

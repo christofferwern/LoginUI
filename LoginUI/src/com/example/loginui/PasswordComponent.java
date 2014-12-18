@@ -39,7 +39,7 @@ public class PasswordComponent extends LinearLayout{
 		editText.setTextColor(color);
 	}
 	
-	@SuppressLint("NewApi") private void onCreate(Context context) {
+	private void onCreate(Context context) {
 		
 		editTextWeight = 3;
 		labelWeight = 1;

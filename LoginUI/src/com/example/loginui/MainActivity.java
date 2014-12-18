@@ -17,13 +17,13 @@ public class MainActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
         
         RegistrationComponent RC = (RegistrationComponent) findViewById(R.id.registration);
         
         //RC.setBackgroundColor(Color.YELLOW);
-        //RC.setTextColor(Color.CYAN);
+        RC.setTextColor(Color.CYAN);
         
-        setContentView(R.layout.activity_main);
     }
 
     @Override
