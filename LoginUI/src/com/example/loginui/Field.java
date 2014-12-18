@@ -1,5 +1,8 @@
 package com.example.loginui;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import android.content.Context;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -16,6 +19,7 @@ public class Field extends LinearLayout{
 	private int textColor, backgroundColor;
 	private Context context;
 	private PasswordComponent pc;
+	private boolean required, isEmail, isPassword;
 	
 	public Field(Context context) {
 		super(context);
@@ -34,6 +38,9 @@ public class Field extends LinearLayout{
 		checkTextView = new TextView(context);
 		pc = new PasswordComponent(context);
 		horizontalLayout = new LinearLayout(context);
+		
+		//GET INPUT TYPE
+		changeInputType();
 		
 		//EDITTEXT LISTENER
 		editTextListeners();
@@ -58,12 +65,25 @@ public class Field extends LinearLayout{
 		this.setLayoutParams(layoutParams);
 		
 		//IF LABEL IS PASSWORD USE PASSWORDFIELD
-		if( headerLabel.equals("Password") || headerLabel.equals("password") ){
+		if(isPassword) {
 			setToPasswordField(true);
-		}
-			
+		}		
 	}
 	
+	private void changeInputType() {
+		if( (headerLabel.toLowerCase()).equals("password")) {
+			isPassword=true;
+			isEmail=false;
+		}else if( (headerLabel.toLowerCase()).equals("email") || 
+				  (headerLabel.toLowerCase()).equals("e-mail") ) {
+			isPassword=false;
+			isEmail=true;
+		}else{
+			isPassword=false;
+			isEmail=false;
+		}
+	}
+
 	private void editTextListeners() {
 		editText.addTextChangedListener(new TextWatcher(){
 
@@ -75,24 +95,26 @@ public class Field extends LinearLayout{
 
 			@Override
 			public void onTextChanged(CharSequence s, int start, int before, int count) {
-				checkTextView.setText(s.toString());
+				if(isEmail)  {
+					if(isEmail(s.toString()))
+						checkTextView.setText("OK");
+					else
+						checkTextView.setText("Not OK");
+				}
+				else
+					checkTextView.setText(s.toString());
 			}
-		});
+		});	
+	}
+
+	protected boolean isEmail(String s) {	 
+		final String EMAIL_PATTERN = 
+			"^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+			+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 		
-		pc.getEditText().addTextChangedListener(new TextWatcher(){
-
-			@Override
-			public void afterTextChanged(Editable s) {}
-
-			@Override
-			public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-
-			@Override
-			public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-			}
-		});
-		
+		Pattern pattern = Pattern.compile(EMAIL_PATTERN);;
+		Matcher matcher = pattern.matcher(s);
+		return matcher.matches();
 	}
 
 	public void setToPasswordField(boolean bool){
@@ -108,7 +130,8 @@ public class Field extends LinearLayout{
 		textColor = color;
 		editText.setTextColor(textColor);
 		checkTextView.setTextColor(textColor);
-		pc.setTextColor(textColor);
+		pc.getEditText().setTextColor(textColor);
+		pc.getCheckTextView().setTextColor(textColor);
 	}
 	
 	public void setHeaderColor(int color){
@@ -134,8 +157,5 @@ public class Field extends LinearLayout{
 	public void setCheckTextView(TextView checkTextView) {
 		this.checkTextView = checkTextView;
 	}
-	
 
-	
-	
 }

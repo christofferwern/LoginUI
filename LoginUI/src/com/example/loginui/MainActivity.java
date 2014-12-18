@@ -22,11 +22,11 @@ public class MainActivity extends ActionBarActivity {
         
         RC = (RegistrationComponent) findViewById(R.id.registration);
         
-        /*RC.setFieldBackgroundColor(Color.BLUE);
-        RC.setTextColor(Color.WHITE);
-        RC.setHeaderColor(Color.RED);*/
+        /*RC.setFieldBackgroundColor(Color.BLACK);
+        RC.setTextColor(Color.GREEN);
+        RC.setHeaderColor(Color.WHITE);
         RC.addField("New field");
-        RC.addField("Bajs f√§ltet");
+        RC.addField("Bajs f‰ltet");*/
         
         
     }
