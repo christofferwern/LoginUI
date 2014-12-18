@@ -27,8 +27,6 @@ public class MainActivity extends ActionBarActivity {
         RC.setHeaderColor(Color.WHITE);
         RC.addField("New field");
         RC.addField("Bajs fältet");*/
-        
-        
     }
 
     @Override
