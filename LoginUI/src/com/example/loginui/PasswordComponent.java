@@ -72,6 +72,13 @@ public class PasswordComponent extends LinearLayout{
 				
 				securityHorizontalLinearLayout.removeAllViews();
 				securityHorizontalLinearLayout.addView(securityView, securityParam);
+				
+				if(getSecurity()==0)
+					label.setText("");
+				else if(getSecurity()<=3) 
+					label.setText("Not OK!");
+				else
+					label.setText("OK!");
 			}
 			
 			@Override
@@ -89,6 +96,14 @@ public class PasswordComponent extends LinearLayout{
 		
 		this.addView(horizontalLinearLayout);
 		this.addView(securityHorizontalLinearLayout);
+	}
+	
+	public EditText getEditText(){
+		return editText;
+	}
+	
+	public TextView getCheckTextView(){
+		return label;
 	}
 	
 	public void setWeight(int editTextWeight, int labelWeight){
