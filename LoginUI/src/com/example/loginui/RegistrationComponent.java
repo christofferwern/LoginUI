@@ -20,7 +20,7 @@ public class RegistrationComponent extends LinearLayout {
 	LinearLayout fieldUser, fieldEmail, fieldAddress;
 	EditText username, email, address;
 	Button btnCreate;
-	int themeBackgroundColor, themeTextColor;
+	int themeBackgroundColor, themeTextColor, themeLabelColor;
 	
 	ArrayList<Field> listField;
 	private Context context;
@@ -31,6 +31,7 @@ public class RegistrationComponent extends LinearLayout {
 		this.setBackgroundColor(Color.alpha(0));
 		this.themeBackgroundColor = Color.argb(100, 0, 0, 0);
 		this.themeTextColor = Color.WHITE;
+		this.themeLabelColor = Color.BLACK;
 		this.listField = new ArrayList<Field>();
 		
 	}
@@ -41,10 +42,18 @@ public class RegistrationComponent extends LinearLayout {
 		this.setBackgroundColor(Color.alpha(0));
 		this.themeBackgroundColor = Color.argb(100, 0, 0, 0);
 		this.themeTextColor = Color.WHITE;
+		this.themeLabelColor = Color.BLACK;
 		this.context = context;
 		this.listField = new ArrayList<Field>();
 		onCreate(context);
 		
+	}
+	
+	public void setHeaderColor(int color){
+		themeLabelColor = color;
+		for(int i= 0; i<listField.size(); i++){
+			listField.get(i).setHeaderColor(color);
+		}
 	}
 	
 	public void setTextColor(int color){
@@ -64,35 +73,49 @@ public class RegistrationComponent extends LinearLayout {
 	public void onCreate(Context context){
 		
 		createFields();
+		setFieldBackgroundColor(themeBackgroundColor);
 		setTextColor(themeTextColor);
+		setHeaderColor(themeLabelColor);
 		
 		for(int i = 0; i<listField.size(); i++){
 			addView(listField.get(i));
 		}
+		btnCreate = new Button(context);
+		btnCreate.setText("Create");
+		
+		addView(btnCreate);
 		
 	}
 	
 	public void createFields(){
 		
 		Field fieldUser = new Field(context, "Username");
+		
+		Field fieldPass = new Field(context, "Password");
+		fieldPass.setToPasswordField();
+		
 		Field fieldEmail = new Field(context, "Email");
 		Field fieldAddress = new Field(context, "Address");
 		
 		listField.add(fieldUser);
+		listField.add(fieldPass);
 		listField.add(fieldEmail);
 		listField.add(fieldAddress);
 		
 	}
 	
 	public void addField(String fieldname){
+		removeView(btnCreate);
 		
 		Field newField = new Field(context, fieldname);
 		newField.setTextColor(themeTextColor);
 		newField.setBackgroundColor(themeBackgroundColor);
+		newField.setHeaderColor(themeLabelColor);
 		
 		listField.add(newField);
 		
 		addView(newField);
+		addView(btnCreate);
 	}
 
 }
