@@ -23,9 +23,7 @@ public class MainActivity extends ActionBarActivity {
         RC = (RegistrationComponent) findViewById(R.id.registration);
         Log.w("RC", ""+RC);
         //RC.setBackgroundColor(Color.YELLOW);
-        RC.setTextColor(Color.CYAN);
-        
-        
+        //RC.setTextColor(Color.CYAN);
     }
 
     @Override

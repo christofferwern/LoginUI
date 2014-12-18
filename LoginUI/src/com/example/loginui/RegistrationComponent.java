@@ -25,7 +25,9 @@ public class RegistrationComponent extends LinearLayout {
 	PasswordComponent PC;
 	int themeBackgroundColor, themeTextColor;
 	int weightSum = 4, weightLeftChild = 3, weightRightChild = 1;
+	
 	ArrayList<Field> listField;
+	private Context context;
 
 	public RegistrationComponent(Context context) {
 		super(context);
@@ -41,12 +43,12 @@ public class RegistrationComponent extends LinearLayout {
 		this.setOrientation(VERTICAL);
 		this.themeBackgroundColor = Color.argb(100, 0, 0, 0);
 		this.themeTextColor = Color.WHITE;
+		this.context = context;
 		onCreate(context);
 		
 	}
 	
 	public void setTextColor(int color){
-		
 		for(int i= 0; i<listField.size(); i++){
 			
 		}
@@ -55,6 +57,11 @@ public class RegistrationComponent extends LinearLayout {
 		PC.setTextColor(color);
 		email.setTextColor(color);
 		address.setTextColor(color);
+
+	}
+	
+	@Override
+	public void setBackgroundColor(int color) {
 		
 	}
 	
@@ -62,116 +69,22 @@ public class RegistrationComponent extends LinearLayout {
 		this.setBackgroundColor(Color.alpha(0));
 		
 		
-		Field user = new Field(context); 
-		
-		
-		createUserField(context);
-		createPassField(context);
-		createEmailField(context);
-		createAddressField(context);
-		setTextColor(themeTextColor);
-		
-		
-
-		btnCreate = new Button(context);
-		btnCreate.setText("Create");
-		
-		lblUser = new TextView(context);
-		lblUser.setText("Username");
-
+		Field fieldUser = new Field(context, "Username");
+		PC = new PasswordComponent(context);
 		lblPass = new TextView(context);
 		lblPass.setText("Password");
-
-		lblEmail = new TextView(context);
-		lblEmail.setText("Email");
+		Field fieldEmail = new Field(context, "Email");
+		Field fieldAddress = new Field(context, "Address");
 		
-		lblAddress = new TextView(context);
-		lblAddress.setText("Address");
-
-		btnCreate.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-			}
-		});
+		createPassField(context);
+		//setTextColor(themeTextColor);
 		
-		addView(lblUser);
-		addView(temp);
+		addView(fieldUser);
 		addView(lblPass);
 		addView(PC);
-		addView(lblEmail);
-		addView(temp);
-		addView(lblAddress);
-		addView(temp);
-		addView(btnCreate);
+		addView(fieldEmail);
+		addView(fieldAddress);
 		
-	}
-	
-	public void createUserField(Context context){
-		Field temp = new Field(context, );
-		temp.setOrientation(HORIZONTAL);
-		temp.setWeightSum(weightSum);
-		LinearLayout.LayoutParams ll = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
-		ll.setMargins(0, 5, 0, 5);
-		temp.setBackgroundColor(themeBackgroundColor);
-		temp.setLayoutParams(ll);
-		
-		username = new EditText(context);
-		username.setLayoutParams(new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, weightLeftChild));
-		
-		checkUser = new TextView(context);
-		checkUser.setBackgroundColor(themeBackgroundColor);
-		checkUser.setLayoutParams(new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, weightRightChild));
-		
-		temp.addView(username);
-		temp.addView(checkUser);
-		
-		return temp;
-	}
-	
-	public LinearLayout createEmailField(Context context){
-		LinearLayout temp = new LinearLayout(context);
-		temp.setOrientation(HORIZONTAL);
-		temp.setWeightSum(weightSum);
-		LinearLayout.LayoutParams ll = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
-		ll.setMargins(0, 5, 0, 5);
-		temp.setBackgroundColor(themeBackgroundColor);
-		temp.setLayoutParams(ll);
-		
-		email = new EditText(context);
-		email.setLayoutParams(new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, weightLeftChild));
-		
-		checkEmail = new TextView(context);
-		checkEmail.setBackgroundColor(themeBackgroundColor);
-		checkEmail.setLayoutParams(new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, weightRightChild));
-		
-		temp.addView(email);
-		temp.addView(checkEmail);
-		
-		return temp;
-	}
-	
-	public void createAddressField(Context context){
-		LinearLayout temp = new LinearLayout(context);
-		temp.setOrientation(HORIZONTAL);
-		temp.setWeightSum(weightSum);
-		LinearLayout.LayoutParams ll = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
-		ll.setMargins(0, 5, 0, 5);
-		temp.setBackgroundColor(themeBackgroundColor);
-		temp.setLayoutParams(ll);
-		
-		address = new EditText(context);
-		address.setLayoutParams(new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, weightLeftChild));
-		
-		checkAddress = new TextView(context);
-		checkAddress.setBackgroundColor(themeBackgroundColor);
-		checkAddress.setLayoutParams(new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, weightRightChild));
-		
-		temp.addView(address);
-		temp.addView(checkAddress);
-		
-		listField.add(temp);
 	}
 	
 	public LinearLayout createPassField(Context context){
