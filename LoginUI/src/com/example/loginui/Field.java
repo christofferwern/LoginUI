@@ -12,6 +12,7 @@ public class Field extends LinearLayout{
 	private String headerLabel;
 	private TextView headerTextView, checkTextView;
 	private LinearLayout horizontalLayout;
+	private int textColor, backgroundColor;
 	
 	public Field(Context context) {
 		super(context);
@@ -48,14 +49,23 @@ public class Field extends LinearLayout{
 		this.setLayoutParams(layoutParams);
 	}
 	
+	@Override
+	public void setBackgroundColor(int color) {
+		backgroundColor = color;
+		this.setBackgroundColor(backgroundColor);
+	}
 	
+	public void setTextColor(int color) {
+		textColor = color;
+		editText.setTextColor(textColor);
+		checkTextView.setTextColor(textColor);
+	}
+	
+	public void setHeaderColor(int color){
+		headerTextView.setTextColor(color);
+	}
 	//GETTERS AND SETTERS
-	public EditText getEditText() {
-		return editText;
-	}
-	public void setEditText(EditText editText) {
-		this.editText = editText;
-	}
+
 	public String getHeaderLabel() {
 		return headerLabel;
 	}
@@ -75,6 +85,7 @@ public class Field extends LinearLayout{
 		this.checkTextView = checkTextView;
 	}
 	
-	
 
+	
+	
 }
