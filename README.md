@@ -18,8 +18,8 @@ RC = (RegistrationComponent) findViewById(R.id.registration); // find the custom
 RC.setFieldBackgroundColor(Color.BLACK); // Sets the background color of all fields.
 RC.setTextColor(Color.GREEN); // Sets the text color of all fields.
 RC.setHeaderColor(Color.WHITE); // Sets the text color of all headers.
-RC.addField("New field"); // Creates a new field with given String name. 
-RC.addField("New field 2"); // Creates a new field with given String name. 
+RC.addField("New field"); // Creates a new field with given String name. (Requierd by Default) 
+RC.addField("New field 2", false); // Creates a new field that is NOT required with given String name.
 
 ```
 
