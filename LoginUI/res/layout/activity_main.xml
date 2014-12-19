@@ -11,6 +11,8 @@
     android:background="#ddffdd"
     tools:context="com.example.loginui.MainActivity" >
 
+    
+    <!-- The registration component -->
     <com.example.loginui.RegistrationComponent
         android:id="@+id/registration"
         android:layout_width="match_parent"

@@ -68,6 +68,9 @@ public class Field extends LinearLayout{
 		editText.setInputType(InputType.TYPE_CLASS_TEXT);
 		headerTextView = new TextView(context);
 		headerTextView.setText(required?headerLabel + " (required)":headerLabel);
+		LinearLayout.LayoutParams textParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT);
+		textParams.setMargins(10, 0, 0, 0);
+		headerTextView.setLayoutParams(textParams);
 		checkTextView = new TextView(context);
 		checkTextView.setText(required?labelNotOk:"");
 		pc = new PasswordComponent(context);
