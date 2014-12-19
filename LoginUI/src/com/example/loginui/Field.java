@@ -4,7 +4,10 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import android.R.bool;
+import android.R.string;
 import android.content.Context;
+import android.graphics.Color;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
@@ -26,15 +29,30 @@ public class Field extends LinearLayout{
 	private boolean isUsername;
 	private ArrayList<String> userList;
 	
+	/**
+	 * Constructor
+	 * @param context - defines the context
+	 */
 	public Field(Context context) {
 		super(context);
 		this.context = context;
 	}
 	
+	/**
+	 * Constructor
+	 * @param context - defines context
+	 * @param headerLabel - defines the header of the field 
+	 */
 	public Field(Context context, String headerLabel){
 		this(context,headerLabel,true);
 	}
-
+	
+	/**
+	 * Constructor
+	 * @param context - defines context
+	 * @param headerLabel - defines the header of the field 
+	 * @param required - define if the field should be required or not
+	 */
 	public Field(Context context, String headerLabel, Boolean required) {
 		super(context);
 		this.setRequired(required);
@@ -87,6 +105,13 @@ public class Field extends LinearLayout{
 		}		
 	}
 	
+	/**
+	 * Function to decide which type the {@link Field} is, four different types.
+	 * @Userfield
+	 * @Passwordfield
+	 * @Emailfield
+	 * @Standardfield
+	 */
 	private void changeInputType() {
 		if( (headerLabel.toLowerCase()).equals("password")) {
 			isPassword=true;
@@ -115,6 +140,9 @@ public class Field extends LinearLayout{
 		}
 	}
 
+	/**
+	 * Adds Listener to the {@link EditText}
+	 */
 	private void editTextListeners() {
 		editText.addTextChangedListener(new TextWatcher(){
 
@@ -190,6 +218,11 @@ public class Field extends LinearLayout{
 		});
 	}
 
+	/**
+	 * Check if {@link string} s is a correct email.
+	 * @param s - input {@link string}
+	 * @return {@link bool} - true if correct email.
+	 */
 	protected boolean isEmail(String s) {	 
 		final String EMAIL_PATTERN = 
 			"^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
@@ -200,6 +233,10 @@ public class Field extends LinearLayout{
 		return matcher.matches();
 	}
 
+	/**
+	 * Set {@link Field} to PasswordField if input is true.
+	 * @param bool - decides whether to set {@link Field} to PasswordField or not.
+	 */
 	public void setToPasswordField(boolean bool){
 		removeView(horizontalLayout);
 		
@@ -209,6 +246,10 @@ public class Field extends LinearLayout{
 			addView(horizontalLayout);
 	}
 	
+	/**
+	 * Get text from {@link EditText} in {@link Field}
+	 * @return {@link String}
+	 */
 	public String getText(){
 		if(isPassword)
 			return pc.getEditText().getText().toString();
@@ -216,6 +257,10 @@ public class Field extends LinearLayout{
 			return editText.getText().toString();
 	}
 	
+	/**
+	 * Set {@link Color} of the text in the {@link EditText} and check - {@link TextView}.
+	 * @param color - defines the color
+	 */
 	public void setTextColor(int color) {
 		textColor = color;
 		editText.setTextColor(textColor);
@@ -224,21 +269,36 @@ public class Field extends LinearLayout{
 		pc.getCheckTextView().setTextColor(textColor);
 	}
 	
+	/**
+	 * Set {@link Color} of the text in the header.
+	 * @param color - defines the color.
+	 */
 	public void setHeaderColor(int color){
 		headerTextView.setTextColor(color);
 	}
 	
+	/**
+	 * Add user to the userlist.
+	 * @param s - user name {@link string}.
+	 */
 	public void addUser(String s){
 		if(userList!=null)
 			userList.add(s);
 	}
 	
+	/**
+	 * Set userlist to parameter list.
+	 * @param list - {@link ArrayList}
+	 */
 	public void setUserList(ArrayList<String> list){
 		if(userList!=null)
 			userList = list;
 	}
 	
-	//GETTERS AND SETTERS
+	/**
+	 * Get {@link EditText} of the {@link Field}
+	 * @return {@link EditText}
+	 */
 	public EditText getEditText(){
 		if(isPassword)
 			return pc.getEditText();
@@ -246,6 +306,10 @@ public class Field extends LinearLayout{
 			return editText;
 	}
 	
+	/**
+	 * 
+	 * @return
+	 */
 	public String getHeaderLabel() {
 		return headerLabel;
 	}
