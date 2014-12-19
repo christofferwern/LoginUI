@@ -2,6 +2,10 @@ package com.example.loginui;
 
 import java.util.ArrayList;
 
+import android.R.attr;
+import android.R.bool;
+import android.R.integer;
+import android.R.string;
 import android.content.Context;
 import android.graphics.Color;
 import android.text.Editable;
@@ -15,15 +19,17 @@ import android.widget.LinearLayout;
 
 public class RegistrationComponent extends LinearLayout {
 	
-	String tag = "Reg";
-	LinearLayout fieldUser, fieldEmail, fieldAddress;
-	EditText username, email, address;
-	Button btnCreate;
-	int themeBackgroundColor, themeTextColor, themeLabelColor;
+	String tag = "Reg"; /*!< Log tag */
+	Button btnCreate; /*!< Button to create a user*/
+	int themeBackgroundColor, themeTextColor, themeLabelColor; /*!< Integers of colors*/
 	
-	ArrayList<Field> listField;
-	private Context context;
+	ArrayList<Field> listField; /*!< List of all fields in the component*/
+	private Context context; /*!< Context */
 
+	/**
+	 * Constructor of Registration component
+	 * @param context
+	 */
 	public RegistrationComponent(Context context) {
 		super(context);
 		this.setOrientation(VERTICAL);
@@ -35,6 +41,12 @@ public class RegistrationComponent extends LinearLayout {
 		
 	}
 	
+	/**
+	 * Constructor of Registration component
+	 * 
+	 * @param context {@link Context}
+	 * @param attrs {@link attr}
+	 */
 	public RegistrationComponent(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		this.setOrientation(VERTICAL);
@@ -47,6 +59,10 @@ public class RegistrationComponent extends LinearLayout {
 		onCreate(context);
 	}
 	
+	/**
+	 * Function to set text color of the headers
+	 * @param color - defines the color {@link integer}
+	 */
 	public void setHeaderColor(int color){
 		themeLabelColor = color;
 		for(int i= 0; i<listField.size(); i++){
@@ -54,6 +70,11 @@ public class RegistrationComponent extends LinearLayout {
 		}
 	}
 	
+	/**
+	 * Function to set text color
+	 * 
+	 * @param color - defines the color {@link integer}
+	 */
 	public void setTextColor(int color){
 		themeTextColor = color;
 		for(int i= 0; i<listField.size(); i++){
@@ -61,6 +82,11 @@ public class RegistrationComponent extends LinearLayout {
 		}
 	}
 	
+	/**
+	 * Function to set background color for each field
+	 * 
+	 * @param color - defines the color {@link integer}
+	 */
 	public void setFieldBackgroundColor(int color){
 		themeBackgroundColor = color;
 		for(int i=0; i<listField.size(); i++){
@@ -68,6 +94,11 @@ public class RegistrationComponent extends LinearLayout {
 		}
 	}
 	
+	/**
+	 * Creates the standard registration fields
+	 * 
+	 * @param context - context {@link Context}
+	 */
 	public void onCreate(Context context){
 	
 		addField("Username");
@@ -95,10 +126,21 @@ public class RegistrationComponent extends LinearLayout {
 		
 	}
 
+	/**
+	 * Function to add a new field
+	 * 
+	 * @param fieldname - sets the name of the field {@link string}
+	 */
 	public void addField(String fieldname){
 		addField(fieldname, true);
 	}
 	
+	/**
+	 * Function to add a new field
+	 * 
+	 * @param fieldname - sets the name of the field {@link string}
+	 * @param required - true makes it a required field {@link bool}
+	 */
 	public void addField(String fieldname, Boolean required){
 			
 		removeView(btnCreate);
