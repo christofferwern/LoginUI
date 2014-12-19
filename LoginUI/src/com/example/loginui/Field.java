@@ -61,7 +61,7 @@ public class Field extends LinearLayout{
 		
 		//GET INPUT TYPE
 		changeInputType();
-		
+		 
 		//EDITTEXT LISTENER
 		editTextListeners();
 		
