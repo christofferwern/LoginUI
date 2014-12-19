@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.w3c.dom.Text;
+
 import android.R.bool;
 import android.R.string;
 import android.content.Context;
@@ -204,11 +206,9 @@ public class Field extends LinearLayout{
 			@Override
 			public void onTextChanged(CharSequence s, int start, int before, int count) {
 				if(pc.getSecurity()<=3){
-					pc.getCheckTextView().setText(labelNotOk);
 					setCorrectInput(false);
 				}
 				else{
-					pc.getCheckTextView().setText(labelOk);
 					setCorrectInput(true);
 				}
 			}
@@ -310,42 +310,83 @@ public class Field extends LinearLayout{
 	}
 	
 	/**
-	 * 
-	 * @return
+	 * Get the header label of the {@link Field}.
+	 * @return {@link String}
 	 */
 	public String getHeaderLabel() {
 		return headerLabel;
 	}
+	
+	/**
+	 * Set the header label of the {@link Field} to input {@link string}
+	 * @param headerLabel - {@link String}
+	 */
 	public void setHeaderLabel(String headerLabel) {
 		this.headerLabel = headerLabel;
 	}
+	
+	/**
+	 * Get the header {@link TextView} of the {@link Field}
+	 * @return {@link TextView}
+	 */
 	public TextView getHeaderTextView() {
 		return headerTextView;
 	}
+	
+	/**
+	 * Set the header {@link TextView} of the {@link Field} to input {@link TextView}
+	 * @param headerTextView - {@link TextView}
+	 */
 	public void setHeaderTextView(TextView headerTextView) {
 		this.headerTextView = headerTextView;
 	}
+	
+	/**
+	 * Get the check {@link TextView} of the {@link Field}
+	 * @return {@link TextView}
+	 */
 	public TextView getCheckTextView() {
 		return checkTextView;
 	}
+	
+	/**
+	 * Set the check {@link TextView} of the {@link Field} to input {@link TextView}
+	 * @param checkTextView - {@link TextView}
+	 */
 	public void setCheckTextView(TextView checkTextView) {
 		this.checkTextView = checkTextView;
 	}
 
+	/**
+	 * Check if {@link Field} is reuired
+	 * @return {@link bool} - true if {@link Field} is required
+	 */
 	public boolean isRequired() {
 		return required;
 	}
 
+	/**
+	 * Set if the {@link Field} is required or not.
+	 * @param required - {@link bool}
+	 */
 	public void setRequired(boolean required) {
 		this.required = required;
 		if(headerTextView!=null && headerLabel!=null)
 			headerTextView.setText(required?headerLabel + " (required)":headerLabel);
 	}
 
+	/**
+	 * Check if {@link Field} has correct input.
+	 * @return {@link bool} - true if correct.
+	 */
 	public boolean isCorrectInput() {
 		return correctInput;
 	}
 
+	/**
+	 * Set correct input of the {@link Field} to input {@link bool}.
+	 * @param correctInput - {@link bool}
+	 */
 	public void setCorrectInput(boolean correctInput) {
 		this.correctInput = correctInput;
 	}

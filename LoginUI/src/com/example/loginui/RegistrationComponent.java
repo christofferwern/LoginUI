@@ -113,6 +113,8 @@ public class RegistrationComponent extends LinearLayout {
 		btnCreate = new Button(context);
 		btnCreate.setText("Create");
 		
+		btnCreate.setEnabled(false);
+		
 		btnCreate.setOnClickListener(new OnClickListener() {
 			
 			@Override

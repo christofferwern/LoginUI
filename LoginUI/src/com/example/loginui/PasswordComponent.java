@@ -1,5 +1,6 @@
 package com.example.loginui;
 
+import android.R.bool;
 import android.R.integer;
 import android.content.Context;
 import android.graphics.Color;
@@ -7,6 +8,7 @@ import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -29,7 +31,6 @@ public class PasswordComponent extends LinearLayout{
 	 */
 	public PasswordComponent(Context context) {
 		super(context);
-		
 		onCreate(context);
 	}
 	
@@ -93,10 +94,10 @@ public class PasswordComponent extends LinearLayout{
 				securityHorizontalLinearLayout.addView(securityView, securityParam);
 				
 				if(getSecurity()<=3){
-					editText.setText(labelNotOk);
+					label.setText(labelNotOk);
 				}
 				else{
-					editText.setText(labelOk);
+					label.setText(labelOk);
 				}
 			}
 			
@@ -119,7 +120,7 @@ public class PasswordComponent extends LinearLayout{
 	
 	/**
 	 * Get the EditText of the component
-	 * @return EditText
+	 * @return {@link EditText}
 	 */
 	public EditText getEditText(){
 		return editText;
@@ -127,7 +128,7 @@ public class PasswordComponent extends LinearLayout{
 	
 	/**
 	 * Get the right label TextView
-	 * @return TextView
+	 * @return {@link TextView}
 	 */
 	public TextView getCheckTextView(){
 		return label;
@@ -135,8 +136,8 @@ public class PasswordComponent extends LinearLayout{
 	
 	/**
 	 * Sets the weights in the component
-	 * @param editTextWeight - defines weight of the EditText (right)
-	 * @param labelWeight - - defines weight of the TexView (left)
+	 * @param editTextWeight - defines weight of the {@link EditText} (right)
+	 * @param labelWeight - - defines weight of the {@link TextView} (left)
 	 */
 	public void setWeight(int editTextWeight, int labelWeight){
 		this.editTextWeight = editTextWeight;
@@ -166,7 +167,8 @@ public class PasswordComponent extends LinearLayout{
 	}
 	
 	/**
-	 * @return an integer corresponding the Password component's security from 0 to 6
+	 * Get value corresponding the Password component's security from 0 to 6
+	 * @return {@link integer}
 	 */
 	public int getSecurity(){
 		
@@ -194,7 +196,8 @@ public class PasswordComponent extends LinearLayout{
 	}
 	
 	/**
-	 * @return the Password component's security label
+	 * Get the Password component's security label
+	 * @return {@link String}
 	 */
 	public String getSecurityLabel(){
 		int security = getSecurity();
@@ -207,42 +210,42 @@ public class PasswordComponent extends LinearLayout{
 	}
 	
 	/**
-	 * @return true if the Password component contains any upper letters
+	 * @return {@link bool} - true if the Password component contains any upper letters
 	 */	
 	private boolean hasUpperLetters(){
 		return !word.equals(word.toLowerCase());
 	}
 	
 	/**
-	 * @return true if the Password component contains any lower letters
+	 * @return {@link bool} - true if the Password component contains any lower letters
 	 */
 	private boolean hasLowerLetters(){
 		return !word.equals(word.toUpperCase());
 	}
 
 	/**
-	 * @return true if the Password component contains any numbers
+	 * @return {@link bool} - true if the Password component contains any numbers
 	 */
 	private boolean hasNumbers(){
 		return word.matches(".*\\d.*");
 	}	
 
 	/**
-	 * @return true if the Password component contains special characters
+	 * @return {@link bool} - true if the Password component contains special characters
 	 */
 	private boolean hasSpecialCharacters(){
 		return !word.matches("[A-Za-z0-9 ]*");
 	}
 	
 	/**
-	 * @return true if the Password component has more than 8 characters
+	 * @return {@link bool} - true if the Password component has more than 8 characters
 	 */
 	private boolean has8Chars(){
 		return (word.length()>7)?true:false;
 	}
 	
 	/**
-	 * @return true if the Password component has more than 12 characters
+	 * @return {@link bool} - true if the Password component has more than 12 characters
 	 */
 	private boolean has12Chars(){
 		return (word.length()>11)?true:false;
