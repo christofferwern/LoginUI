@@ -22,4 +22,6 @@ RC.addField("New field"); // Creates a new field with given String name. (Requie
 RC.addField("New field 2", false); // Creates a new field that is NOT required with given String name.
 
 ```
-
+Docs
+====
+The documentation is generated with doxygen and can be found in Docs/index.html
