@@ -4,7 +4,12 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.w3c.dom.Text;
+
+import android.R.bool;
+import android.R.string;
 import android.content.Context;
+import android.graphics.Color;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
@@ -26,15 +31,30 @@ public class Field extends LinearLayout{
 	private boolean isUsername;
 	private ArrayList<String> userList;
 	
+	/**
+	 * Constructor
+	 * @param context - defines the context
+	 */
 	public Field(Context context) {
 		super(context);
 		this.context = context;
 	}
 	
+	/**
+	 * Constructor
+	 * @param context - defines context
+	 * @param headerLabel - defines the header of the field 
+	 */
 	public Field(Context context, String headerLabel){
 		this(context,headerLabel,true);
 	}
-
+	
+	/**
+	 * Constructor
+	 * @param context - defines context
+	 * @param headerLabel - defines the header of the field 
+	 * @param required - define if the field should be required or not
+	 */
 	public Field(Context context, String headerLabel, Boolean required) {
 		super(context);
 		this.setRequired(required);
@@ -90,6 +110,13 @@ public class Field extends LinearLayout{
 		}		
 	}
 	
+	/**
+	 * Function to decide which type the {@link Field} is, four different types.
+	 * @Userfield
+	 * @Passwordfield
+	 * @Emailfield
+	 * @Standardfield
+	 */
 	private void changeInputType() {
 		if( (headerLabel.toLowerCase()).equals("password")) {
 			isPassword=true;
@@ -118,6 +145,9 @@ public class Field extends LinearLayout{
 		}
 	}
 
+	/**
+	 * Adds Listener to the {@link EditText}
+	 */
 	private void editTextListeners() {
 		editText.addTextChangedListener(new TextWatcher(){
 
@@ -176,11 +206,9 @@ public class Field extends LinearLayout{
 			@Override
 			public void onTextChanged(CharSequence s, int start, int before, int count) {
 				if(pc.getSecurity()<=3){
-					pc.getCheckTextView().setText(labelNotOk);
 					setCorrectInput(false);
 				}
 				else{
-					pc.getCheckTextView().setText(labelOk);
 					setCorrectInput(true);
 				}
 			}
@@ -193,6 +221,11 @@ public class Field extends LinearLayout{
 		});
 	}
 
+	/**
+	 * Check if {@link string} s is a correct email.
+	 * @param s - input {@link string}
+	 * @return {@link bool} - true if correct email.
+	 */
 	protected boolean isEmail(String s) {	 
 		final String EMAIL_PATTERN = 
 			"^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
@@ -203,6 +236,10 @@ public class Field extends LinearLayout{
 		return matcher.matches();
 	}
 
+	/**
+	 * Set {@link Field} to PasswordField if input is true.
+	 * @param bool - decides whether to set {@link Field} to PasswordField or not.
+	 */
 	public void setToPasswordField(boolean bool){
 		removeView(horizontalLayout);
 		
@@ -212,6 +249,10 @@ public class Field extends LinearLayout{
 			addView(horizontalLayout);
 	}
 	
+	/**
+	 * Get text from {@link EditText} in {@link Field}
+	 * @return {@link String}
+	 */
 	public String getText(){
 		if(isPassword)
 			return pc.getEditText().getText().toString();
@@ -219,6 +260,10 @@ public class Field extends LinearLayout{
 			return editText.getText().toString();
 	}
 	
+	/**
+	 * Set {@link Color} of the text in the {@link EditText} and check - {@link TextView}.
+	 * @param color - defines the color
+	 */
 	public void setTextColor(int color) {
 		textColor = color;
 		editText.setTextColor(textColor);
@@ -227,21 +272,36 @@ public class Field extends LinearLayout{
 		pc.getCheckTextView().setTextColor(textColor);
 	}
 	
+	/**
+	 * Set {@link Color} of the text in the header.
+	 * @param color - defines the color.
+	 */
 	public void setHeaderColor(int color){
 		headerTextView.setTextColor(color);
 	}
 	
+	/**
+	 * Add user to the userlist.
+	 * @param s - user name {@link string}.
+	 */
 	public void addUser(String s){
 		if(userList!=null)
 			userList.add(s);
 	}
 	
+	/**
+	 * Set userlist to parameter list.
+	 * @param list - {@link ArrayList}
+	 */
 	public void setUserList(ArrayList<String> list){
 		if(userList!=null)
 			userList = list;
 	}
 	
-	//GETTERS AND SETTERS
+	/**
+	 * Get {@link EditText} of the {@link Field}
+	 * @return {@link EditText}
+	 */
 	public EditText getEditText(){
 		if(isPassword)
 			return pc.getEditText();
@@ -249,39 +309,84 @@ public class Field extends LinearLayout{
 			return editText;
 	}
 	
+	/**
+	 * Get the header label of the {@link Field}.
+	 * @return {@link String}
+	 */
 	public String getHeaderLabel() {
 		return headerLabel;
 	}
+	
+	/**
+	 * Set the header label of the {@link Field} to input {@link string}
+	 * @param headerLabel - {@link String}
+	 */
 	public void setHeaderLabel(String headerLabel) {
 		this.headerLabel = headerLabel;
 	}
+	
+	/**
+	 * Get the header {@link TextView} of the {@link Field}
+	 * @return {@link TextView}
+	 */
 	public TextView getHeaderTextView() {
 		return headerTextView;
 	}
+	
+	/**
+	 * Set the header {@link TextView} of the {@link Field} to input {@link TextView}
+	 * @param headerTextView - {@link TextView}
+	 */
 	public void setHeaderTextView(TextView headerTextView) {
 		this.headerTextView = headerTextView;
 	}
+	
+	/**
+	 * Get the check {@link TextView} of the {@link Field}
+	 * @return {@link TextView}
+	 */
 	public TextView getCheckTextView() {
 		return checkTextView;
 	}
+	
+	/**
+	 * Set the check {@link TextView} of the {@link Field} to input {@link TextView}
+	 * @param checkTextView - {@link TextView}
+	 */
 	public void setCheckTextView(TextView checkTextView) {
 		this.checkTextView = checkTextView;
 	}
 
+	/**
+	 * Check if {@link Field} is reuired
+	 * @return {@link bool} - true if {@link Field} is required
+	 */
 	public boolean isRequired() {
 		return required;
 	}
 
+	/**
+	 * Set if the {@link Field} is required or not.
+	 * @param required - {@link bool}
+	 */
 	public void setRequired(boolean required) {
 		this.required = required;
 		if(headerTextView!=null && headerLabel!=null)
 			headerTextView.setText(required?headerLabel + " (required)":headerLabel);
 	}
 
+	/**
+	 * Check if {@link Field} has correct input.
+	 * @return {@link bool} - true if correct.
+	 */
 	public boolean isCorrectInput() {
 		return correctInput;
 	}
 
+	/**
+	 * Set correct input of the {@link Field} to input {@link bool}.
+	 * @param correctInput - {@link bool}
+	 */
 	public void setCorrectInput(boolean correctInput) {
 		this.correctInput = correctInput;
 	}
