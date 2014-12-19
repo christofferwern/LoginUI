@@ -12,7 +12,6 @@ import android.view.MenuItem;
 
 
 public class MainActivity extends ActionBarActivity {
-	UserList userList = null;
 	RegistrationComponent RC = null;
 
     @Override
@@ -25,8 +24,8 @@ public class MainActivity extends ActionBarActivity {
         RC.setFieldBackgroundColor(Color.WHITE);
         RC.setTextColor(Color.argb(100, 200, 100, 100));
         RC.setHeaderColor(Color.BLACK);
-        RC.addField("New field");
-        RC.addField("New field 2", false);
+        RC.addField("Custom field");
+        RC.addField("Custom field 2", false);
     }
 
     @Override
