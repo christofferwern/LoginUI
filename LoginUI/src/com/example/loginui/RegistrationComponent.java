@@ -1,6 +1,15 @@
 package com.example.loginui;
 
+import java.io.StringWriter;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import com.example.loginui.PasswordComponent.SecurityType;
 
 import android.R.attr;
 import android.R.bool;
@@ -19,12 +28,18 @@ import android.widget.LinearLayout;
 
 public class RegistrationComponent extends LinearLayout {
 	
+	Map<String, String> userMap;
 	String tag = "Reg"; /*!< Log tag */
 	Button btnCreate; /*!< Button to create a user*/
 	int themeBackgroundColor, themeTextColor, themeLabelColor; /*!< Integers of colors*/
 	
+	JSONObject infoJson;
 	ArrayList<Field> listField; /*!< List of all fields in the component*/
 	private Context context; /*!< Context */
+	
+	public enum Type{
+		DEFAULT,EMAIL,PASSWORD;
+	}
 
 	/**
 	 * Constructor of Registration component
@@ -38,6 +53,8 @@ public class RegistrationComponent extends LinearLayout {
 		this.themeTextColor = Color.WHITE;
 		this.themeLabelColor = Color.BLACK;
 		this.listField = new ArrayList<Field>();
+		this.userMap = new LinkedHashMap<String, String>();
+		this.infoJson = new JSONObject();
 		
 	}
 	
@@ -56,6 +73,8 @@ public class RegistrationComponent extends LinearLayout {
 		this.themeLabelColor = Color.BLACK;
 		this.context = context;
 		this.listField = new ArrayList<Field>();
+		this.userMap = new LinkedHashMap<String, String>();
+		this.infoJson = new JSONObject();
 		onCreate(context);
 	}
 	
@@ -100,11 +119,6 @@ public class RegistrationComponent extends LinearLayout {
 	 * @param context - context {@link Context}
 	 */
 	public void onCreate(Context context){
-	
-		addField("Username");
-		addField("Password");
-		addField("Email");
-		addField("Address", false);
 		
 		setFieldBackgroundColor(themeBackgroundColor);
 		setTextColor(themeTextColor);
@@ -112,29 +126,48 @@ public class RegistrationComponent extends LinearLayout {
 		
 		btnCreate = new Button(context);
 		btnCreate.setText("Create");
-		
-		btnCreate.setEnabled(false);
-		
 		btnCreate.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
+				
+				for(int i=0; i<listField.size(); i++){
+					
+					try {
+						infoJson.put(listField.get(i).getHeaderLabel(), listField.get(i).getText());
+					} catch (JSONException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+
+				}
 			}
 		});
-
 		
+		btnCreate.setEnabled(false);
 		addView(btnCreate);
 		
 	}
 
+	
 	/**
 	 * Function to add a new field
 	 * 
 	 * @param fieldname - sets the name of the field {@link string}
+	 * @throws JSONException 
 	 */
 	public void addField(String fieldname){
-		addField(fieldname, true);
+		addField(fieldname,Type.DEFAULT,true);
+	}
+	
+	/**
+	 * Function to add a new field
+	 * 
+	 * @param fieldname - sets the name of the field {@link string}
+	 * @throws JSONException 
+	 */
+	public void addField(String fieldname, Type TYPE){
+		addField(fieldname,TYPE,true);
 	}
 	
 	/**
@@ -142,12 +175,26 @@ public class RegistrationComponent extends LinearLayout {
 	 * 
 	 * @param fieldname - sets the name of the field {@link string}
 	 * @param required - true makes it a required field {@link bool}
+	 * @throws JSONException 
 	 */
-	public void addField(String fieldname, Boolean required){
+	public void addField(String fieldname,Type TYPE, Boolean required){
 			
 		removeView(btnCreate);
+
+		Field newField = new Field(context,fieldname,required);
 		
-		Field newField = new Field(context, fieldname,required);
+		switch (TYPE) {
+			case DEFAULT:
+			break;
+			
+			case EMAIL:
+				newField.setToEmailField(true);
+			break;
+			
+			case PASSWORD:
+				newField.setToPasswordField(true);
+			break;
+		}
 		newField.setTextColor(themeTextColor);
 		newField.setBackgroundColor(themeBackgroundColor);
 		newField.setHeaderColor(themeLabelColor);
@@ -156,9 +203,10 @@ public class RegistrationComponent extends LinearLayout {
 			
 			@Override
 			public void onTextChanged(CharSequence s, int start, int before, int count) {
+				
 				btnCreate.setEnabled(true);
+
 				for(int i = 0; i<listField.size();i++){
-					Log.w(tag, ""+listField.get(i).isCorrectInput());
 					if(!listField.get(i).isCorrectInput()){
 						btnCreate.setEnabled(false);
 					}
@@ -172,11 +220,34 @@ public class RegistrationComponent extends LinearLayout {
 			public void afterTextChanged(Editable s) {}
 		});
 		
+		
 		listField.add(newField);
 		
 		addView(newField);
+		
 		if(btnCreate!=null)
 			addView(btnCreate);
 	}
+	
+	public Button getCreateButton(){
+		if(btnCreate != null)
+			return btnCreate;
+		else
+			return null;
+	}
+	
+	public JSONObject getJson(){
+		if(infoJson.length() != 0)
+			return infoJson;
+		return null;
+		
+	}
 
+	public void setPasswordLevel(SecurityType TYPE){
+		for(int i = 0; i<listField.size(); i++){
+			if(listField.get(i).isPassword()){
+				listField.get(i).getPasswordComponent().setSecurityLevel(TYPE);
+			}
+		}
+	}
 }

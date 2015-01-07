@@ -13,6 +13,7 @@ import android.graphics.Color;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -78,9 +79,7 @@ public class Field extends LinearLayout{
 		pc = new PasswordComponent(context);
 		pc.getCheckTextView().setText(required?labelNotOk:"");
 		horizontalLayout = new LinearLayout(context);
-		
-		//GET INPUT TYPE
-		changeInputType();
+		isEmail = false;
 		 
 		//EDITTEXT LISTENER
 		editTextListeners();
@@ -104,45 +103,7 @@ public class Field extends LinearLayout{
 		layoutParams.setMargins(0, 5, 0, 5);	
 		this.setLayoutParams(layoutParams);
 		
-		//IF LABEL IS PASSWORD USE PASSWORDFIELD
-		if(isPassword) {
-			setToPasswordField(true);
-		}		
-	}
-	
-	/**
-	 * Function to decide which type the {@link Field} is, four different types.
-	 * @Userfield
-	 * @Passwordfield
-	 * @Emailfield
-	 * @Standardfield
-	 */
-	private void changeInputType() {
-		if( (headerLabel.toLowerCase()).equals("password")) {
-			isPassword=true;
-			isEmail=false;
-			isUsername=false;
-		}else if( (headerLabel.toLowerCase()).equals("email") || 
-				  (headerLabel.toLowerCase()).equals("e-mail") ) {
-			isPassword=false;
-			isEmail=true;
-			isUsername=false;
-		}else if((headerLabel.toLowerCase()).equals("username") ||
-				 (headerLabel.toLowerCase()).equals("user")){
-			isPassword=false;
-			isEmail=false;
-			isUsername=true;
-			
-			userList = new ArrayList<String>();
-			userList.add("Tobbe");
-			userList.add("Martin");
-			userList.add("Markus");
-		}
-		else{
-			isPassword=false;
-			isEmail=false;
-			isUsername=false;
-		}
+		//IF LABEL IS PASSWORD USE PASSWORDFIELD	
 	}
 
 	/**
@@ -205,7 +166,9 @@ public class Field extends LinearLayout{
 			
 			@Override
 			public void onTextChanged(CharSequence s, int start, int before, int count) {
-				if(pc.getSecurity()<=3){
+				Log.e("onText","onText");
+				if(pc.getSecurity()!=pc.getSections()){
+					Log.e("WHOOOO","HOHOHOHO");
 					setCorrectInput(false);
 				}
 				else{
@@ -240,8 +203,19 @@ public class Field extends LinearLayout{
 	 * Set {@link Field} to PasswordField if input is true.
 	 * @param bool - decides whether to set {@link Field} to PasswordField or not.
 	 */
+	
+	public void setToEmailField(boolean bool){
+		isEmail = bool;
+	}
+
+	/**
+	 * Set {@link Field} to PasswordField if input is true.
+	 * @param bool - decides whether to set {@link Field} to PasswordField or not.
+	 */
 	public void setToPasswordField(boolean bool){
 		removeView(horizontalLayout);
+		
+		isPassword = true;
 		
 		if(bool)
 			addView(pc);
@@ -389,6 +363,13 @@ public class Field extends LinearLayout{
 	 */
 	public void setCorrectInput(boolean correctInput) {
 		this.correctInput = correctInput;
+	}
+	
+	public boolean isPassword(){
+		return isPassword;
+	}
+	public PasswordComponent getPasswordComponent(){
+		return pc;
 	}
 
 }

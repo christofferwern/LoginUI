@@ -25,12 +25,23 @@ public class PasswordComponent extends LinearLayout{
 	private LinearLayout horizontalLinearLayout, securityHorizontalLinearLayout;
 	protected String labelNotOk, labelOk;
 	
+	SecurityLevel SL;
+	private int textColor = Color.BLACK;
+	
+	public enum SecurityType{
+		EASY, MEDIUM, HARD;
+	}
+
+	
 	/**
 	 * Constructor
 	 * @param context - defines the context
 	 */
 	public PasswordComponent(Context context) {
 		super(context);
+		setSecurityLevel(SecurityType.EASY);
+		horizontalLinearLayout = new LinearLayout(context);
+		securityHorizontalLinearLayout = new LinearLayout(context);
 		onCreate(context);
 	}
 	
@@ -41,7 +52,9 @@ public class PasswordComponent extends LinearLayout{
 	 */
 	public PasswordComponent(Context context, AttributeSet attrs) {
 		super(context, attrs);
-				
+		setSecurityLevel(SecurityType.EASY);
+		horizontalLinearLayout = new LinearLayout(context);
+		securityHorizontalLinearLayout = new LinearLayout(context);
 		onCreate(context);
 	}
 	
@@ -50,6 +63,7 @@ public class PasswordComponent extends LinearLayout{
 	 * @param color - defines the color of the text
 	 */
 	public void setTextColor(int color){
+		textColor = color;
 		editText.setTextColor(color);
 		label.setTextColor(color);
 	}
@@ -60,20 +74,20 @@ public class PasswordComponent extends LinearLayout{
 	 */
 	private void onCreate(Context context) {
 		
+		
+		
 		labelOk = "OK";
 		labelNotOk = "Not OK";
 		editTextWeight = 3;
 		labelWeight = 1;
 		
-		horizontalLinearLayout = new LinearLayout(context);
-		securityHorizontalLinearLayout = new LinearLayout(context);
 		
 		this.setOrientation(VERTICAL);
 		
 		horizontalLinearLayout.setOrientation(HORIZONTAL);
 		horizontalLinearLayout.setWeightSum(editTextWeight + labelWeight);
 		securityHorizontalLinearLayout.setOrientation(HORIZONTAL);
-		securityHorizontalLinearLayout.setWeightSum(6);
+		securityHorizontalLinearLayout.setWeightSum(SL.getSecuritySections());
 		
 		securityView = new TextView(context);
 		securityHorizontalLinearLayout.addView(securityView);
@@ -82,18 +96,19 @@ public class PasswordComponent extends LinearLayout{
 		label.setText("");
 		
 		editText = new EditText(context);
+		editText.setTextColor(textColor);
 		editText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
 		editText.addTextChangedListener(new TextWatcher() {	
 			@Override
 			public void onTextChanged(CharSequence s, int start, int before, int count) {
 				word = s.toString();
-				securityView.setBackgroundColor(getSecurityColor());
-				LinearLayout.LayoutParams securityParam = new LinearLayout.LayoutParams(0,LinearLayout.LayoutParams.MATCH_PARENT, getSecurity());
+				securityView.setBackgroundColor(SL.getSecurityColor(word));
+				LinearLayout.LayoutParams securityParam = new LinearLayout.LayoutParams(0,LinearLayout.LayoutParams.MATCH_PARENT, SL.getSecurity(word));
 				
 				securityHorizontalLinearLayout.removeAllViews();
 				securityHorizontalLinearLayout.addView(securityView, securityParam);
 				
-				if(getSecurity()<=3){
+				if(SL.getSecurity(word)!=SL.getSecuritySections()){
 					label.setText(labelNotOk);
 				}
 				else{
@@ -145,62 +160,11 @@ public class PasswordComponent extends LinearLayout{
 	}
 	
 	/**
-	 * Get the color corresponding to the Password component security
-	 * @return Color {@link integer} 
-	 */
-	public int getSecurityColor() {
-		int s = getSecurity();
-		if(s==1)
-			return Color.rgb(255,0,0);;
-		if(s==2)
-			return Color.rgb(255,128,0);;
-		if(s==3)
-			return Color.rgb(255,255,0);;
-		if(s==4)
-			return Color.rgb(178,255,102);
-		if(s==5)
-			return Color.rgb(128,255,0);
-		if(s==6)
-			return Color.rgb(0,255,0);
-		
-		return Color.BLACK;
-	}
-	
-	/**
-	 * Get value corresponding the Password component's security from 0 to 6
-	 * @return {@link integer}
-	 */
-	public int getSecurity(){
-		
-		int security = 0;
-		
-		if(this.hasUpperLetters())
-			security++;
-		
-		if(this.hasLowerLetters())
-			security++;
-		
-		if(this.hasNumbers())
-			security++;
-		
-		if(this.hasSpecialCharacters())
-			security++;
-		
-		if(this.has8Chars())
-			security++;
-		
-		if(this.has12Chars())
-			security++;
-		
-		return security;
-	}
-	
-	/**
 	 * Get the Password component's security label
 	 * @return {@link String}
 	 */
 	public String getSecurityLabel(){
-		int security = getSecurity();
+		int security = SL.getSecurity(word);
 		
 		for(int i=0;i<passwordSecurityLabels.length;i++)
 			if(security>i-1 && security<=i)
@@ -209,46 +173,41 @@ public class PasswordComponent extends LinearLayout{
 		return "";
 	}
 	
-	/**
-	 * @return {@link bool} - true if the Password component contains any upper letters
-	 */	
-	private boolean hasUpperLetters(){
-		return !word.equals(word.toLowerCase());
+	public int getSecurity(){
+		return SL.getSecurity(word);
 	}
 	
-	/**
-	 * @return {@link bool} - true if the Password component contains any lower letters
-	 */
-	private boolean hasLowerLetters(){
-		return !word.equals(word.toUpperCase());
+	public int getSections(){
+		return SL.getSecuritySections();
+	}
+	
+	public void setSecurityLevel(SecurityType TYPE){
+		
+		SecurityLevel(TYPE);
+	}
+	public void SecurityLevel(SecurityType TYPE){
+		Log.w("SETTYPE", ""+TYPE);
+		switch (TYPE) {
+			case EASY:
+				Log.w("1", "EASY");
+				this.SL = new SecurityEasy();
+				break;
+			case MEDIUM:
+				Log.w("2", "MEDIUM");
+				this.SL = new SecurityMedium();
+				break;
+			case HARD:
+				Log.w("3", "HARD");
+				this.SL = new SecurityHard();
+				break;
+		}
+		
+		
+		if(	securityHorizontalLinearLayout!=null)
+			securityHorizontalLinearLayout.setWeightSum(SL.getSecuritySections()); 
+	
+		
 	}
 
-	/**
-	 * @return {@link bool} - true if the Password component contains any numbers
-	 */
-	private boolean hasNumbers(){
-		return word.matches(".*\\d.*");
-	}	
-
-	/**
-	 * @return {@link bool} - true if the Password component contains special characters
-	 */
-	private boolean hasSpecialCharacters(){
-		return !word.matches("[A-Za-z0-9 ]*");
-	}
-	
-	/**
-	 * @return {@link bool} - true if the Password component has more than 8 characters
-	 */
-	private boolean has8Chars(){
-		return (word.length()>7)?true:false;
-	}
-	
-	/**
-	 * @return {@link bool} - true if the Password component has more than 12 characters
-	 */
-	private boolean has12Chars(){
-		return (word.length()>11)?true:false;
-	}
 }
 

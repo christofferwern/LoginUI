@@ -3,12 +3,17 @@ package com.example.loginui;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.example.loginui.PasswordComponent.SecurityType;
+import com.example.loginui.RegistrationComponent.Type;
+
 import android.support.v7.app.ActionBarActivity;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -21,11 +26,16 @@ public class MainActivity extends ActionBarActivity {
         
         RC = (RegistrationComponent) findViewById(R.id.registration);
         
-        RC.setFieldBackgroundColor(Color.WHITE);
-        RC.setTextColor(Color.argb(100, 200, 100, 100));
-        RC.setHeaderColor(Color.BLACK);
-        RC.addField("Custom field");
-        RC.addField("Custom field 2", false);
+        RC.setFieldBackgroundColor(Color.GREEN);
+        RC.setHeaderColor(Color.RED);
+        RC.setTextColor(Color.BLUE);
+        RC.addField("Username", Type.DEFAULT);
+        RC.addField("Password", Type.PASSWORD);
+        RC.setPasswordLevel(SecurityType.HARD);
+        RC.addField("Customfield", Type.DEFAULT, false);
+        
+
+    
     }
 
     @Override
