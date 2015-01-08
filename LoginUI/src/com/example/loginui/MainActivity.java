@@ -26,13 +26,18 @@ public class MainActivity extends ActionBarActivity {
         
         RC = (RegistrationComponent) findViewById(R.id.registration);
         
-        RC.setFieldBackgroundColor(Color.GREEN);
-        RC.setHeaderColor(Color.RED);
-        RC.setTextColor(Color.BLUE);
+        RC.addField("Firstname", Type.DEFAULT, false);
+        RC.addField("Lastname", Type.DEFAULT, false);
         RC.addField("Username", Type.DEFAULT);
         RC.addField("Password", Type.PASSWORD);
-        RC.setPasswordLevel(SecurityType.HARD);
-        RC.addField("Customfield", Type.DEFAULT, false);
+        RC.addField("Email", Type.EMAIL, true);
+        
+        RC.setHeaderColor(Color.argb(100,0, 0, 0));
+        RC.setFieldBackgroundColor(Color.argb(100,0, 159, 137));
+        RC.setTextColor(Color.argb(150, 255, 255, 255));
+        
+        RC.setPasswordBarColors(Color.rgb(23, 49, 46), Color.rgb(167, 241, 231));
+        RC.setPasswordLevel(SecurityType.MEDIUM);
         
 
     

@@ -166,9 +166,7 @@ public class Field extends LinearLayout{
 			
 			@Override
 			public void onTextChanged(CharSequence s, int start, int before, int count) {
-				Log.e("onText","onText");
 				if(pc.getSecurity()!=pc.getSections()){
-					Log.e("WHOOOO","HOHOHOHO");
 					setCorrectInput(false);
 				}
 				else{
@@ -365,9 +363,18 @@ public class Field extends LinearLayout{
 		this.correctInput = correctInput;
 	}
 	
+	/**
+	 * Check if the field is a password
+	 * @return {@link bool} true if the field is a password
+	 */
 	public boolean isPassword(){
 		return isPassword;
 	}
+	
+	/**
+	 * Get the password component
+	 * @return {@link PasswordComponent}
+	 */
 	public PasswordComponent getPasswordComponent(){
 		return pc;
 	}

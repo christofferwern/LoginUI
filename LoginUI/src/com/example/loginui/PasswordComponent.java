@@ -25,13 +25,19 @@ public class PasswordComponent extends LinearLayout{
 	private LinearLayout horizontalLinearLayout, securityHorizontalLinearLayout;
 	protected String labelNotOk, labelOk;
 	
+	public static int colorStart = Color.RED, colorEnd = Color.GREEN;
+	
 	SecurityLevel SL;
 	private int textColor = Color.BLACK;
 	
+	/** 
+	 * Defines the level of the security.  
+     */
 	public enum SecurityType{
-		EASY, MEDIUM, HARD;
+		EASY, /**< EASY Level*/
+		MEDIUM, /**< MEDIUM Level*/ 
+		HARD; /**< HARD level*/
 	}
-
 	
 	/**
 	 * Constructor
@@ -74,8 +80,6 @@ public class PasswordComponent extends LinearLayout{
 	 */
 	private void onCreate(Context context) {
 		
-		
-		
 		labelOk = "OK";
 		labelNotOk = "Not OK";
 		editTextWeight = 3;
@@ -108,7 +112,7 @@ public class PasswordComponent extends LinearLayout{
 				securityHorizontalLinearLayout.removeAllViews();
 				securityHorizontalLinearLayout.addView(securityView, securityParam);
 				
-				if(SL.getSecurity(word)!=SL.getSecuritySections()){
+				if(SL.getSecurityValue(word)!=SL.getSecuritySections()){
 					label.setText(labelNotOk);
 				}
 				else{
@@ -164,7 +168,7 @@ public class PasswordComponent extends LinearLayout{
 	 * @return {@link String}
 	 */
 	public String getSecurityLabel(){
-		int security = SL.getSecurity(word);
+		int security = SL.getSecurityValue(word);
 		
 		for(int i=0;i<passwordSecurityLabels.length;i++)
 			if(security>i-1 && security<=i)
@@ -173,35 +177,61 @@ public class PasswordComponent extends LinearLayout{
 		return "";
 	}
 	
+	/**
+	 * Get the current security value of the input string
+	 * 
+	 * @return security value 
+	 */
 	public int getSecurity(){
-		return SL.getSecurity(word);
+		return SL.getSecurityValue(word);
 	}
 	
+	/**
+	 * Get the number of sections in the passward bar.
+	 * 
+	 * @return security section
+	 */
 	public int getSections(){
 		return SL.getSecuritySections();
 	}
 	
+	/**
+	 * Set {@link SecurityType} of the password component. EASY, MEDIUM or HARD.
+	 * @param TYPE
+	 */
 	public void setSecurityLevel(SecurityType TYPE){
-		
 		SecurityLevel(TYPE);
 	}
+	
+	/**
+	 * Set colors of the password security bar. It will interpolate between the two parameter colors {@link integer}.
+	 * @param start
+	 * @param end
+	 */
+	public void passwordBarColors(int start, int end){
+		colorStart = start;
+		colorEnd = end;
+		SL.setColors(colorStart, colorEnd);
+	}
+	
+	/**
+	 * Sets the level of the password security
+	 * @param TYPE {@link SecurityLevel}
+	 */
 	public void SecurityLevel(SecurityType TYPE){
-		Log.w("SETTYPE", ""+TYPE);
 		switch (TYPE) {
 			case EASY:
-				Log.w("1", "EASY");
 				this.SL = new SecurityEasy();
 				break;
 			case MEDIUM:
-				Log.w("2", "MEDIUM");
 				this.SL = new SecurityMedium();
 				break;
 			case HARD:
-				Log.w("3", "HARD");
 				this.SL = new SecurityHard();
 				break;
 		}
 		
+		SL.setColors(colorStart, colorEnd);
 		
 		if(	securityHorizontalLinearLayout!=null)
 			securityHorizontalLinearLayout.setWeightSum(SL.getSecuritySections()); 

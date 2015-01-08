@@ -13,6 +13,7 @@ import com.example.loginui.PasswordComponent.SecurityType;
 
 import android.R.attr;
 import android.R.bool;
+import android.R.color;
 import android.R.integer;
 import android.R.string;
 import android.content.Context;
@@ -28,17 +29,22 @@ import android.widget.LinearLayout;
 
 public class RegistrationComponent extends LinearLayout {
 	
-	Map<String, String> userMap;
-	String tag = "Reg"; /*!< Log tag */
-	Button btnCreate; /*!< Button to create a user*/
-	int themeBackgroundColor, themeTextColor, themeLabelColor; /*!< Integers of colors*/
+	Map<String, String> userMap; 
+	String tag = "Reg";
+	Button btnCreate; 
+	int themeBackgroundColor, themeTextColor, themeLabelColor; 
 	
-	JSONObject infoJson;
-	ArrayList<Field> listField; /*!< List of all fields in the component*/
-	private Context context; /*!< Context */
+	JSONObject infoJson; 
+	ArrayList<Field> listField; 
+	private Context context; 
 	
+	/** Defines what type of field. 
+     *  
+     */
 	public enum Type{
-		DEFAULT,EMAIL,PASSWORD;
+		DEFAULT, /**< DEFAULT Field*/
+		EMAIL, /**< EMAIL Field */
+		PASSWORD; /**< PASSWORD Field*/
 	}
 
 	/**
@@ -229,6 +235,11 @@ public class RegistrationComponent extends LinearLayout {
 			addView(btnCreate);
 	}
 	
+	/**
+	 * Get the create button
+	 * 
+	 * @return btnCreate - returns create button {@link Button}
+	 */
 	public Button getCreateButton(){
 		if(btnCreate != null)
 			return btnCreate;
@@ -236,17 +247,42 @@ public class RegistrationComponent extends LinearLayout {
 			return null;
 	}
 	
+	/**
+	 * 
+	 * @return JSONObject {@link JSONObject} with data from the fields.
+	 */
 	public JSONObject getJson(){
 		if(infoJson.length() != 0)
 			return infoJson;
 		return null;
 		
 	}
-
+	
+	
+	/**
+	 * Set the security level {@link SecurityType} of the password component in the registration component.
+	 * 
+	 * @param TYPE {@link SecurityType} - set the level of security.
+	 */
 	public void setPasswordLevel(SecurityType TYPE){
 		for(int i = 0; i<listField.size(); i++){
 			if(listField.get(i).isPassword()){
 				listField.get(i).getPasswordComponent().setSecurityLevel(TYPE);
+			}
+		}
+	}
+	
+	/**
+	 * Sets the color gradient of the password bar
+	 * 
+	 * @param startColor - {@link color} at start
+	 * @param endColor - {@link color} at end
+	 */
+	public void setPasswordBarColors(int startColor, int endColor){
+		
+		for(int i = 0; i<listField.size(); i++){
+			if(listField.get(i).isPassword()){
+				listField.get(i).getPasswordComponent().passwordBarColors(startColor, endColor);
 			}
 		}
 	}
