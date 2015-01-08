@@ -10,15 +10,17 @@ The second one is a Password analyzer that will check if a given password is str
 To be able to create a new user all the required fields has to be filled correctly, this will enable the create button.
 
 There is three different types of fields:
-        DEFAULT
-        EMAIL
-        PASSWORD
-
+```
+        Type.DEFAULT
+        Type.EMAIL
+        Type.PASSWORD
+```
 But also three different security levels of the password field:
-        EASY
-        MEDIUM
-        HARD
-
+```
+        SecurityType.EASY
+        SecurityType.MEDIUM
+        SecurityType.HARD
+```
 How to use
 ==========
 
