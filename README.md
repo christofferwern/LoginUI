@@ -9,19 +9,36 @@ The second one is a Password analyzer that will check if a given password is str
 
 To be able to create a new user all the required fields has to be filled correctly, this will enable the create button.
 
+There is three different types of fields:
+        DEFAULT
+        EMAIL
+        PASSWORD
+
+But also three different security levels of the password field:
+        EASY
+        MEDIUM
+        HARD
+
 How to use
 ==========
 
 ```
-RC = (RegistrationComponent) findViewById(R.id.registration); // find the custom component in XML
-        
-RC.setFieldBackgroundColor(Color.BLACK); // Sets the background color of all fields.
-RC.setTextColor(Color.GREEN); // Sets the text color of all fields.
-RC.setHeaderColor(Color.WHITE); // Sets the text color of all headers.
-RC.addField("New field"); // Creates a new field with given String name. (Requierd by Default) 
-RC.addField("New field 2", false); // Creates a new field that is NOT required with given String name.
+RC = (RegistrationComponent) findViewById(R.id.registration);
+
+RC.addField("Firstname", Type.DEFAULT, false);
+RC.addField("Lastname", Type.DEFAULT, false);
+RC.addField("Username", Type.DEFAULT);
+RC.addField("Password", Type.PASSWORD);
+RC.addField("Email", Type.EMAIL, true);
+
+RC.setHeaderColor(Color.argb(100,0, 0, 0)); // Sets the text color of all headers.
+RC.setFieldBackgroundColor(Color.argb(100,0, 159, 137)); // Sets the background color of all fields.
+RC.setTextColor(Color.argb(150, 255, 255, 255)); // Sets the text color of all fields.
+
+RC.setPasswordBarColors(Color.rgb(23, 49, 46), Color.rgb(167, 241, 231));
+RC.setPasswordLevel(SecurityType.MEDIUM);
 
 ```
 Docs
 ====
-The documentation is generated with doxygen and can be found in Docs/index.html
+The documentation is generated with doxygen and can be found in Docs/html/index.html
